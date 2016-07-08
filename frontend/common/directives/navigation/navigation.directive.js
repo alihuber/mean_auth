@@ -6,7 +6,9 @@
 
   function navigation () {
     return {
-      restrict: 'EA',
+      // restricts to attribte or element name,
+      // everything in template will be inserted into <navigation>
+      restrict: 'AE',
       templateUrl: '/common/directives/navigation/navigation.template.html',
       controller: 'navigationCtrl as navvm'
     };

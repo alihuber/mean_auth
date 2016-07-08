@@ -8,4 +8,6 @@
         li(ng-hide='navvm.isLoggedIn')
           a(href='login') Sign in
         li(ng-show='navvm.isLoggedIn')
-          a(href='profile') {{ navvm.currentUser.name }}
+          a(href='profile') {{ navvm.currentUser.username }}'s profile
+        li(ng-show='navvm.isLoggedIn')
+          a(href='logout') Log out

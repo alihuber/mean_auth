@@ -23,6 +23,11 @@
         controller: 'profileCtrl',
         controllerAs: 'vm'
       })
+      .when('/logout', {
+        templateUrl: 'home/home.view.html',
+        controller: 'logoutCtrl',
+        controllerAs: 'vm'
+      })
       .otherwise({redirectTo: '/'});
 
     // use the HTML5 History API
