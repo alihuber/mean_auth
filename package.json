@@ -1,0 +1,32 @@
+{
+  "name": "mean_auth",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "express-jwt": "~3.4.0",
+    "pug": "2.0.0-beta3",
+    "jsonwebtoken": "~7.0.1",
+    "mongoose": "~4.5.3",
+    "morgan": "~1.7.0",
+    "passport": "~0.3.2",
+    "passport-local": "~1.0.0",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.0",
+    "gulp-concat": "~2.6.0",
+    "gulp-ng-annotate": "~2.0.0",
+    "gulp-ng-html2js": "~0.2.0",
+    "gulp-sourcemaps": "~1.6.0",
+    "gulp-uglify": "~1.5.4",
+    "gulp-watch": "~4.3.4",
+    "gulp-pug": "~3.0.3"
+  }
+}
