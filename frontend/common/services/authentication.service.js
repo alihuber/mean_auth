@@ -42,19 +42,19 @@
       }
     };
 
-    register = function(user) {
+    var register = function(user) {
       return $http.post('/api/register', user).success(function(data) {
         saveToken(data.token);
       });
     };
 
-    login = function(user) {
+    var login = function(user) {
       return $http.post('/api/login', user).success(function(data) {
         saveToken(data.token);
       });
     };
 
-    logout = function() {
+    var logout = function() {
       $window.localStorage.removeItem('mean-token');
     };
 
