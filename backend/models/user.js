@@ -1,25 +1,25 @@
 var mongoose = require( 'mongoose' );
-var crypto   = require('crypto');
+var bcrypt   = require('bcryptjs');
 var jwt      = require('jsonwebtoken');
+var Schema   = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
-var userSchema = new mongoose.Schema({
+var userSchema = new Schema({
+  id: ObjectId,
   username: {
     type: String,
     unique: true,
     required: true
   },
-  hash: String,
-  salt: String
+  password: String
 });
 
 userSchema.methods.setPassword = function(password){
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
 userSchema.methods.validPassword = function(password) {
-  var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
-  return this.hash === hash;
+  return bcrypt.compareSync(password, this.password);
 };
 
 userSchema.methods.generateJwt = function() {
