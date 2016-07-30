@@ -1,5 +1,5 @@
 (function () {
-  angular.module('meanApp', ['ngRoute']);
+  angular.module('meanApp', ['ngRoute', 'formly', 'formlyBootstrap']);
 
   function config ($routeProvider, $locationProvider) {
     $routeProvider

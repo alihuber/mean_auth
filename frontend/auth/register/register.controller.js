@@ -4,8 +4,8 @@
     .module('meanApp')
     .controller('registerCtrl', registerCtrl);
 
-  registerCtrl.$inject = ['$location', 'authentication'];
-  function registerCtrl($location, authentication) {
+  registerCtrl.$inject = ['$location', 'authentication', 'credentialsForm']
+  function registerCtrl($location, authentication, credentialsForm) {
     var vm = this;
 
     vm.credentials = {
@@ -13,14 +13,16 @@
       password : ""
     };
 
-    vm.onSubmit = function () {
+    vm.credentialsFields = credentialsForm.credentialsFields;
+
+    vm.onSubmit = function() {
       console.log('Submitting registration');
       authentication
         .register(vm.credentials)
-        .error(function(err){
+        .error(function(err) {
           alert(err);
         })
-        .then(function(){
+        .then(function() {
           $location.path('profile');
         });
     };

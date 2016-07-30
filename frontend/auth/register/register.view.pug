@@ -8,10 +8,5 @@ navigation
         a(href='login') log in 
         |  instead.
       form(ng-submit='vm.onSubmit()')
-        .form-group
-          label(for='username') Username 
-          input#username.form-control(type='text', placeholder='Enter your username', ng-model='vm.credentials.username')
-        .form-group
-          label(for='password') Password 
-          input#password.form-control(type='password', placeholder='Password', ng-model='vm.credentials.password')
-        button.btn.btn-default(type='submit' id='register_button') Register!
+        formly-form(model='vm.credentials', fields='vm.credentialsFields' form='vm.credentialsForm')
+          button.btn.btn-default(type='submit' id='register_button') Register!
