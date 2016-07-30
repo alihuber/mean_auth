@@ -16,11 +16,11 @@
     vm.credentialsFields = credentialsForm.credentialsFields;
 
     vm.onSubmit = function() {
-      console.log('Submitting registration');
       authentication
         .register(vm.credentials)
         .error(function(err) {
-          alert(err);
+          vm.message = err;
+          $location.path('register');
         })
         .then(function() {
           $location.path('profile');

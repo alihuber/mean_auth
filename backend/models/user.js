@@ -11,7 +11,10 @@ var userSchema = new Schema({
     unique: true,
     required: true
   },
-  password: String
+  password: {
+    type: String,
+    required: true
+  }
 });
 
 userSchema.methods.setPassword = function(password) {

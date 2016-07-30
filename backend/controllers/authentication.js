@@ -9,31 +9,35 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.register = function(req, res) {
 
-  // if(!req.body.name || !req.body.email || !req.body.password) {
-  //   sendJSONresponse(res, 400, {
-  //     "message": "All fields required"
-  //   });
-  //   return;
-  // }
+  if(!req.body.username || !req.body.password) {
+    sendJSONresponse(res, 400, { 'message': 'All fields required' });
+    return;
+  }
 
-  var user = new User();
+  var user      = new User();
   user.username = req.body.username;
   user.setPassword(req.body.password);
   user.save(function(err) {
+    if(err) {
+      // unique entry violation
+      if(err.message.includes('E11000')) {
+        res.status(401).json('Please choose a different user name.');
+      } else {
+        res.status(401).json(err.message);
+      }
+      return;
+    }
     var token;
     token = user.generateJwt();
     res.status(200);
-    res.json({ "token" : token });
+    res.json({ 'token' : token });
   });
 };
 
 module.exports.login = function(req, res) {
 
   if(!req.body.username || !req.body.password) {
-    console.log('attempted authentication withouth username or password');
-    // sendJSONresponse(res, 400, {
-    //   "message": "All fields required"
-    // });
+    sendJSONresponse(res, 400, { 'message': 'All fields required' });
     return;
   }
 
@@ -50,7 +54,7 @@ module.exports.login = function(req, res) {
     if(user) {
       token = user.generateJwt();
       res.status(200);
-      res.json({ "token" : token });
+      res.json({ 'token' : token });
     } else {
       // user not found
       res.status(401).json(info);
