@@ -29,18 +29,19 @@ module.exports.register = function(req, res) {
 
 module.exports.login = function(req, res) {
 
-  // if(!req.body.email || !req.body.password) {
-  //   sendJSONresponse(res, 400, {
-  //     "message": "All fields required"
-  //   });
-  //   return;
-  // }
+  if(!req.body.username || !req.body.password) {
+    console.log('attempted authentication withouth username or password');
+    // sendJSONresponse(res, 400, {
+    //   "message": "All fields required"
+    // });
+    return;
+  }
 
   passport.authenticate('local', function(err, user, info) {
     var token;
 
     // If Passport throws/catches an error
-    if (err) {
+    if(err) {
       res.status(404).json(err);
       return;
     }

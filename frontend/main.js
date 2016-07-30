@@ -1,7 +1,7 @@
-(function () {
+(function() {
   angular.module('meanApp', ['ngRoute', 'formly', 'formlyBootstrap']);
 
-  function config ($routeProvider, $locationProvider) {
+  function config($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'home/home.view.html',
@@ -36,7 +36,7 @@
 
   function run($rootScope, $location, authentication) {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
-      if ($location.path() === '/profile' && !authentication.isLoggedIn()) {
+      if($location.path() === '/profile' && !authentication.isLoggedIn()) {
         $location.path('/');
       }
     });

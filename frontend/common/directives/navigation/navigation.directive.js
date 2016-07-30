@@ -1,10 +1,10 @@
-(function () {
+(function() {
 
   angular
     .module('meanApp')
     .directive('navigation', navigation);
 
-  function navigation () {
+  function navigation() {
     return {
       // restricts to attribte or element name,
       // everything in template will be inserted into <navigation>

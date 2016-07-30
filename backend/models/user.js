@@ -14,7 +14,7 @@ var userSchema = new Schema({
   password: String
 });
 
-userSchema.methods.setPassword = function(password){
+userSchema.methods.setPassword = function(password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 

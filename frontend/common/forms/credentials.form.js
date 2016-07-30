@@ -1,4 +1,5 @@
 (function() {
+
   angular
   .module('meanApp')
   .factory('credentialsForm', credentialsForm);

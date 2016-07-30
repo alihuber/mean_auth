@@ -1,10 +1,10 @@
-(function () {
+(function() {
 
   angular
     .module('meanApp')
     .controller('registerCtrl', registerCtrl);
 
-  registerCtrl.$inject = ['$location', 'authentication', 'credentialsForm']
+  registerCtrl.$inject = ['$location', 'authentication', 'credentialsForm'];
   function registerCtrl($location, authentication, credentialsForm) {
     var vm = this;
 
