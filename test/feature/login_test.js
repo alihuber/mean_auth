@@ -1,0 +1,42 @@
+module.exports = {
+  'Login with no credentials' : function (browser) {
+    browser
+      .url('http://localhost:3001/login')
+      .waitForElementVisible('body', 1000)
+      .assert.cssClassNotPresent('div.form-group', 'has-error')
+      .setValue('#formly_1_input_username_0', '')
+      .setValue('#formly_1_input_password_1', '')
+      .click('#login_button')
+      .assert.cssClassPresent('div.form-group', 'has-error')
+      .end();
+  },
+
+  'Login with wrong credentials' : function (browser) {
+    browser
+      .url('http://localhost:3001/login')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('div#alert_div', '')
+      .setValue('#formly_1_input_username_0', 'wrong.name')
+      .setValue('#formly_1_input_password_1', 'wrong.password')
+      .click('#login_button')
+      .assert.containsText("div#alert_div", "Invalid")
+      .end();
+  },
+
+  'Login with correct credentials' : function (browser) {
+    browser
+      .url('http://localhost:3001/login')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText("div#alert_div", "")
+      .setValue('#formly_1_input_username_0', 'registered')
+      .setValue('#formly_1_input_password_1', 'registered')
+      .click('#login_button')
+      .expect.element('body').text.to.contain("registered's profile");
+    browser
+      .click('#logout_link')
+      .assert.containsText('body', 'Hello there')
+      .expect.element('body').text.to.not.contain("registered's profile");
+    browser
+      .end();
+  }
+};

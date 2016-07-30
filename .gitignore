@@ -16,6 +16,9 @@ coverage
 # Dependency directories
 node_modules
 
+# selenium reports
+reports
+
 frontend/**/*.html
 frontend/*.min.js
 *.min.js.map

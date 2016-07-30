@@ -25,6 +25,7 @@
     "node-inspector": "~0.12.8",
     "mocha": "~2.5.3",
     "chai": "~3.5.0",
+    "nightwatch": "~0.9.5",
     "gulp": "~3.9.0",
     "gulp-concat": "~2.6.0",
     "gulp-ng-annotate": "~2.0.0",

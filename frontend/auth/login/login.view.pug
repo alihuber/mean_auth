@@ -7,8 +7,9 @@ navigation
         | Not a member? Please 
         a(href='register') register
         |  instead.
-      .alert.alert-danger(role='alert', ng-show='vm.message') {{vm.message}}
-      form(ng-submit='vm.onSubmit()')
+      .alert.alert-danger(id='alert_div', role='alert',
+        ng-show='vm.message') {{vm.message}}
+      form(ng-submit='vm.onSubmit()', id='login_form')
         formly-form(model='vm.credentials',
           fields='vm.credentialsFields' form='vm.credentialsForm')
           button.btn.btn-default(type='submit' id='login_button') Sign in!
