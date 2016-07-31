@@ -1,3 +1,6 @@
+process.env.NODE_ENV = 'test';
+process.env.PORT     = '3001';
+
 var mongoose = require('mongoose');
 var should   = require('chai').should();
 require('../../backend/models/user');
@@ -5,16 +8,12 @@ var User     = mongoose.model('User');
 
 
 describe('User model', function () {
-  before(function() {
-    console.log('connecting to test database');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth');
-  });
-
-  after(function() {
+  after(function(done) {
     console.log('resetting test database...');
     mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', function() {
-        mongoose.connection.db.dropDatabase();
+        User.collection.remove();
     });
+    done();
   });
 
   describe('create with missing password', function () {
