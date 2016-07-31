@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node_modules/.bin/mocha test/models/* test/api/*",
+    "test": "node_modules/.bin/_mocha test/models/* test/api/*",
+    "cover": "node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test/models/* test/api/* -R spec",
     "feature_test": "node_modules/.bin/nightwatch"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "~1.5.4",
     "gulp-watch": "~4.3.9",
-    "gulp-pug": "~3.0.3"
+    "gulp-pug": "~3.0.3",
+    "istanbul": "~0.4.4"
   }
 }

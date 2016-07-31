@@ -49,7 +49,7 @@ describe('Login endpoint', function () {
   });
 
   describe('requesting /api/login with unknown user', function() {
-    it('should return 400', function(done) {
+    it('should return 401', function(done) {
       server
         .post('/api/login')
         .send( {'username': 'some.user', 'password': 'some.password'} )
@@ -64,7 +64,32 @@ describe('Login endpoint', function () {
     });
   });
 
-  describe('requesting /api/login with existing user', function() {
+  describe('requesting /api/login with wrong password', function() {
+    before(function(done) {
+      console.log('populating test database...');
+      var user      = new User();
+      user.username = 'registered';
+      user.setPassword('registered');
+      user.save();
+      done();
+    });
+
+    it('should return 401', function(done) {
+      server
+        .post('/api/login')
+        .send( {'username': 'registered', 'password': 'wrong.password'} )
+        .expect("Content-type",/json/)
+        .expect(401)
+        .end(function(err, res) {
+          res.status.should.equal(401);
+          res.text
+            .should.equal('{"message":"Invalid user/password combination."}');
+          done();
+      });
+    });
+  });
+
+  describe('requesting /api/login correct credentials user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user      = new User();
