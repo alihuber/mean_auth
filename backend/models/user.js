@@ -27,6 +27,8 @@ userSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
+// TODO: MY_SECRET replace with cryptographically strong encrypt key, don't keep
+// the secret in the code
 userSchema.methods.generateJwt = function() {
   var expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
@@ -35,7 +37,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     username: this.username,
     exp: parseInt(expiry.getTime() / 1000),
-  }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
+  }, "MY_SECRET");
 };
 
 mongoose.model('User', userSchema);

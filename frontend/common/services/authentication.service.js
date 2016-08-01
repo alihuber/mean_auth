@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
   angular
     .module('meanApp')
@@ -7,11 +7,11 @@
   authentication.$inject = ['$http', '$window'];
   function authentication($http, $window) {
 
-    var saveToken = function (token) {
+    var saveToken = function(token) {
       $window.localStorage['mean-token'] = token;
     };
 
-    var getToken = function () {
+    var getToken = function() {
       return $window.localStorage['mean-token'];
     };
 
@@ -19,7 +19,7 @@
       var token = getToken();
       var payload;
 
-      if(token){
+      if(token) {
         payload = token.split('.')[1];
         payload = $window.atob(payload);
         payload = JSON.parse(payload);

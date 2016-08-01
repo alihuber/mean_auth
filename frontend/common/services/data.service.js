@@ -7,7 +7,7 @@
   meanData.$inject = ['$http', 'authentication'];
   function meanData ($http, authentication) {
 
-    var getProfile = function () {
+    var getProfile = function() {
       return $http.get('/api/profile', {
         headers: {
           Authorization: 'Bearer '+ authentication.getToken()

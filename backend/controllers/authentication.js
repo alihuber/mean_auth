@@ -23,6 +23,7 @@ module.exports.register = function(req, res) {
       if(err.message.includes('E11000')) {
         res.status(401).json('Please choose a different user name.');
       } else {
+        // other database error
         res.status(401).json(err.message);
       }
       return;
