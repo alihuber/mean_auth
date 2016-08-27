@@ -25,7 +25,7 @@
   "devDependencies": {
     "debug": "~2.2.0",
     "node-inspector": "~0.12.8",
-    "mocha": "~2.5.3",
+    "mocha": "~3.0.2",
     "chai": "~3.5.0",
     "nightwatch": "~0.9.8",
     "supertest": "~2.0.0",
@@ -34,7 +34,7 @@
     "gulp-ng-annotate": "~2.0.0",
     "gulp-ng-html2js": "~0.2.0",
     "gulp-sourcemaps": "~1.6.0",
-    "gulp-uglify": "~1.5.4",
+    "gulp-uglify": "~2.0.0",
     "gulp-watch": "~4.3.9",
     "gulp-pug": "~3.0.4",
     "istanbul": "~0.4.5",
