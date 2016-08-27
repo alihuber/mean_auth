@@ -46,7 +46,7 @@ describe('Profile endpoint', function () {
         .expect(401)
         .end(function(err, res) {
           res.status.should.equal(401);
-          res.text.should.include('UnauthorizedError: private profile');
+          res.text.should.include('UnauthorizedError');
           done();
       });
     });

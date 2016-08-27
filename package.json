@@ -14,12 +14,12 @@
     "cookie-parser": "~1.4.3",
     "express": "~4.14.0",
     "express-jwt": "~3.4.0",
-    "jsonwebtoken": "~7.1.7",
-    "mongoose": "~4.5.7",
+    "jsonwebtoken": "~7.1.9",
+    "mongoose": "~4.5.10",
     "morgan": "~1.7.0",
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
-    "pug": "2.0.0-beta4",
+    "pug": "2.0.0-beta6",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "node-inspector": "~0.12.8",
     "mocha": "~2.5.3",
     "chai": "~3.5.0",
-    "nightwatch": "~0.9.5",
+    "nightwatch": "~0.9.8",
     "supertest": "~2.0.0",
     "gulp": "~3.9.0",
     "gulp-concat": "~2.6.0",
@@ -36,7 +36,8 @@
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "~1.5.4",
     "gulp-watch": "~4.3.9",
-    "gulp-pug": "~3.0.3",
-    "istanbul": "~0.4.4"
+    "gulp-pug": "~3.0.4",
+    "istanbul": "~0.4.5",
+    "npm-check-updates": "~2.8.0"
   }
 }
