@@ -6,8 +6,6 @@
 
   logoutCtrl.$inject = ['$location', 'authentication'];
   function logoutCtrl($location, authentication) {
-    var vm = this;
     authentication.logout();
   }
 })();
-

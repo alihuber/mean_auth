@@ -1,5 +1,9 @@
 (function() {
 
+  function AuthenticationException(message) {
+    this.message = "Error loading profile: " + message;
+  }
+
   angular
     .module('meanApp')
     .controller('profileCtrl', profileCtrl);
@@ -15,7 +19,7 @@
         vm.user = data;
       })
       .error(function(e) {
-        console.log(e);
+        throw new AuthenticationException(e);
       });
   }
 
