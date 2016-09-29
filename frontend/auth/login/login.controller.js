@@ -23,7 +23,7 @@
           $location.path('login');
         })
         .then(function() {
-          $location.path('profile');
+          $location.path('home');
         });
     };
   }

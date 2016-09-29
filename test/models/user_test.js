@@ -84,6 +84,7 @@ describe('User model', function () {
       User.create(user, function (err, createdUser) {
         should.not.exist(err);
         createdUser.username.should.equal('Foo');
+        createdUser.isAdmin.should.equal(false);
         done();
       });
     });

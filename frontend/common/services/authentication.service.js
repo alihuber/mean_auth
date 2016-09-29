@@ -32,11 +32,12 @@
 
     var currentUser = function() {
       if(isLoggedIn()) {
-        var token = getToken();
+        var token   = getToken();
         var payload = token.split('.')[1];
-        payload = $window.atob(payload);
-        payload = JSON.parse(payload);
+        payload     = $window.atob(payload);
+        payload     = JSON.parse(payload);
         return {
+          isAdmin: payload.isAdmin,
           username : payload.username
         };
       }

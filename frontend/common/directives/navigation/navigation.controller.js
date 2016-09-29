@@ -4,12 +4,14 @@
     .module('meanApp')
     .controller('navigationCtrl', navigationCtrl);
 
-  navigationCtrl.$inject = ['$location','authentication'];
-
-  function navigationCtrl($location, authentication) {
+  navigationCtrl.$inject = ['authentication'];
+  function navigationCtrl(authentication) {
     var vm = this;
     vm.isLoggedIn  = authentication.isLoggedIn();
     vm.currentUser = authentication.currentUser();
+    if(vm.currentUser !== undefined) {
+      vm.isAdmin   = vm.currentUser.isAdmin;
+    }
   }
 
 })();

@@ -23,7 +23,7 @@ module.exports = {
       .end();
   },
 
-  'Login with correct credentials' : function (browser) {
+  'Login as normal user' : function (browser) {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('body', 1000)
@@ -31,11 +31,28 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button')
-      .expect.element('body').text.to.contain("registered's profile");
+      .expect.element('body').text.to.contain("User dashboard");
     browser
       .click('#logout_link')
       .assert.containsText('body', 'Hello there')
       .expect.element('body').text.to.not.contain("registered's profile");
+    browser
+      .end();
+  },
+
+  'Login as admin user' : function (browser) {
+    browser
+      .url('http://localhost:3001/login')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText("div#alert_div", "")
+      .setValue('#formly_1_input_username_0', 'admin')
+      .setValue('#formly_1_input_password_1', 'admin')
+      .click('#login_button')
+      .expect.element('body').text.to.contain("Admin dashboard");
+    browser
+      .click('#logout_link')
+      .assert.containsText('body', 'Hello there')
+      .expect.element('body').text.to.not.contain("admin's profile");
     browser
       .end();
   }

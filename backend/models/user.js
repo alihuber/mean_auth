@@ -16,7 +16,8 @@ var userSchema = new Schema({
     type: String,
     minlength: 8,
     required: true
-  }
+  },
+  isAdmin: { type: Boolean, default: false }
 });
 
 userSchema.methods.setPassword = function(password) {
@@ -36,6 +37,7 @@ userSchema.methods.generateJwt = function() {
   return jwt.sign({
     _id: this._id,
     username: this.username,
+    isAdmin: this.isAdmin,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET");
 };
