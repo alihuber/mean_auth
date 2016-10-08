@@ -9,7 +9,7 @@
       var vm = this;
       vm.isLoggedIn  = authentication.isLoggedIn();
       vm.currentUser = authentication.currentUser();
-      if(vm.currentUser !== undefined) {
+      if(typeof vm.currentUser !== 'undefined') {
         vm.isAdmin   = vm.currentUser.isAdmin;
       }
     }
