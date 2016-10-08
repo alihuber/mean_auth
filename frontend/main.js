@@ -36,7 +36,7 @@
 
   function run($rootScope, $location, authentication) {
     $rootScope.$on('$routeChangeStart',
-      function(event, nextRoute, currentRoute) {
+      function() {
         if($location.path() === '/profile' && !authentication.isLoggedIn()) {
           $location.path('/');
         }
