@@ -2,7 +2,7 @@ module.exports = {
   'Register with no credentials' : function (browser) {
     browser
       .url('http://localhost:3001/register')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.cssClassNotPresent('div.form-group', 'has-error')
       .setValue('#formly_1_input_username_0', '')
       .setValue('#formly_1_input_password_1', '')
@@ -14,7 +14,7 @@ module.exports = {
   'Register with taken credentials' : function (browser) {
     browser
       .url('http://localhost:3001/register')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText('div#alert_div', '')
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'some.password')
@@ -26,7 +26,7 @@ module.exports = {
   'Register and authenticate with correct credentials' : function (browser) {
     browser
       .url('http://localhost:3001/register')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText('div#alert_div', '')
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')
@@ -38,7 +38,7 @@ module.exports = {
       .expect.element('body').text.to.not.contain("new_user's profile");
     browser
       .url('http://localhost:3001/login')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText('div#alert_div', '')
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')

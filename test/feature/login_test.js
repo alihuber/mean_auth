@@ -2,7 +2,7 @@ module.exports = {
   'Login with no credentials' : function (browser) {
     browser
       .url('http://localhost:3001/login')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.cssClassNotPresent('div.form-group', 'has-error')
       .setValue('#formly_1_input_username_0', '')
       .setValue('#formly_1_input_password_1', '')
@@ -14,7 +14,7 @@ module.exports = {
   'Login with wrong credentials' : function (browser) {
     browser
       .url('http://localhost:3001/login')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText('div#alert_div', '')
       .setValue('#formly_1_input_username_0', 'wrong.name')
       .setValue('#formly_1_input_password_1', 'wrong.password')
@@ -26,7 +26,7 @@ module.exports = {
   'Login as normal user' : function (browser) {
     browser
       .url('http://localhost:3001/login')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText("div#alert_div", "")
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')
@@ -43,7 +43,7 @@ module.exports = {
   'Login as admin user' : function (browser) {
     browser
       .url('http://localhost:3001/login')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('navigation', 1000)
       .assert.containsText("div#alert_div", "")
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
