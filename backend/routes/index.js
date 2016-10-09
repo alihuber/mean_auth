@@ -20,5 +20,6 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 router.get('/users', auth, usersController.fetchUsers);
+router.get('/users/:id', auth, usersController.findUser);
 
 module.exports = router;

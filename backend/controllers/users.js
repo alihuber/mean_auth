@@ -23,3 +23,27 @@ module.exports.fetchUsers = function(req, res) {
     });
   }
 };
+
+module.exports.findUser = function(req, res) {
+  if(!req.payload._id) {
+    res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
+  } else {
+    User.findById(req.payload._id).exec(function(err, user) {
+      if(err) {
+        res.status(404).json(err);
+        return;
+      }
+
+      if(user) {
+        if(!user.isAdmin) {
+          res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
+        } else {
+          var userId = req.params.id;
+          User.findById(userId, 'username isAdmin', function(err, user) {
+            res.status(200).json({"user": user});
+          });
+        }
+      }
+    });
+  }
+};

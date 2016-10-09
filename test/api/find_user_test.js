@@ -20,10 +20,10 @@ describe('Users endpoint', function () {
     done();
   });
 
-  describe('requesting /api/users with no auth header', function() {
+  describe('requesting /api/users/:id with no auth header', function() {
     it('should return 401', function(done) {
       server
-        .get('/api/users')
+        .get('/api/users/123')
         .expect("Content-type",/json/)
         .expect(401)
         .end(function(err, res) {
@@ -34,11 +34,11 @@ describe('Users endpoint', function () {
     });
   });
 
-  describe('requesting /api/users with wrong auth header', function() {
+  describe('requesting /api/users/:id with wrong auth header', function() {
     it('should return 401', function(done) {
       // no _id property
       server
-        .get('/api/users')
+        .get('/api/users/123')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
              'eyJ1c2VybmFtZSI6InJlZ2lzdGVyZWQiLCJleHAiOjE0NzA1NjgyMTEsImlhdCI' +
              '6MTQ2OTk2MzQxMX0.UiSO2PefzfEVIrqBCJzIxBfXjJvc7_pAD2n96gajs5A')
@@ -52,7 +52,7 @@ describe('Users endpoint', function () {
     });
   });
 
-  describe('requesting /api/users with non-admin user', function() {
+  describe('requesting /api/users/:id with non-admin user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user      = new User();
@@ -75,7 +75,7 @@ describe('Users endpoint', function () {
           exp: parseInt(expiry.getTime() / 1000),
         }, "MY_SECRET");
         server
-          .get('/api/users')
+          .get('/api/users/123')
           .set('Authorization', 'Bearer ' + token)
           .expect("Content-type",/json/)
           .expect(401)
@@ -88,7 +88,7 @@ describe('Users endpoint', function () {
       });
     });
 
-  describe('requesting /api/users with admin user', function() {
+  describe('requesting /api/users/:id with admin user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user      = new User();
@@ -112,15 +112,63 @@ describe('Users endpoint', function () {
           exp: parseInt(expiry.getTime() / 1000),
         }, "MY_SECRET");
         server
-          .get('/api/users')
+          .get('/api/users/123')
           .set('Authorization', 'Bearer ' + token)
           .expect("Content-type",/json/)
           .expect(200)
           .end(function(err, res) {
             res.status.should.equal(200);
-            res.text.should.include('"username":"admin"');
-            res.text.should.not.include('password');
+            res.text.should.include('{}');
             done();
+          });
+        });
+      });
+    });
+
+  describe('requesting /api/users/:id with persisted user', function() {
+    before(function(done) {
+      console.log('populating test database...');
+      var user1      = new User();
+      user1.username = 'admin';
+      user1.setPassword('admin');
+      user1.isAdmin  = true;
+      user1.save();
+      var user2      = new User();
+      user2.username = 'some.user';
+      user2.setPassword('some.password');
+      user2.isAdmin  = false;
+      user2.save();
+      done();
+    });
+
+    it('should return 200 and user data', function(done) {
+      var token       = "";
+      var adminUserId = "";
+      var userId      = "";
+      User.find({username: 'some.user'}).then(function(users, err) {
+        userId = users[0]._id;
+        User.find({username: 'admin'}).then(function(users, err) {
+          adminUserId = users[0]._id;
+          var expiry  = new Date();
+          expiry.setDate(expiry.getDate() + 7);
+          token = jwt.sign({
+            _id: users[0]._id,
+            username: 'admin',
+            exp: parseInt(expiry.getTime() / 1000),
+          }, "MY_SECRET");
+          server
+            .get('/api/users/' + userId)
+            .set('Authorization', 'Bearer ' + token)
+            .expect("Content-type",/json/)
+            .expect(200)
+            .end(function(err, res) {
+              res.status.should.equal(200);
+              res.text.should.include('"username":"some.user"');
+              res.text.should.include('"isAdmin":false');
+              res.text.should.include('"_id":"' + userId + '"');
+              res.text.should.not.include('password');
+              done();
+            });
           });
         });
       });
