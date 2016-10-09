@@ -18,7 +18,7 @@ var userSchema = new Schema({
     required: true
   },
   isAdmin: { type: Boolean, default: false }
-});
+}, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } });
 
 userSchema.methods.setPassword = function(password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

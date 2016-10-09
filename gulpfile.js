@@ -27,10 +27,16 @@ gulp.task('pug', function() {
   gulp.src(['./frontend/**/*.pug']).pipe(pug({})).pipe(gulp.dest('./frontend'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watchJS', function() {
   watch(['./frontend/**/*.js', '!./frontend/**/*.test.js', '!./frontend/app.min.js'], function () {
     gulp.start('scripts');
   });
 });
 
-gulp.task('default', ['scripts', 'maps', 'pug', 'watch']);
+gulp.task('watchPug', function() {
+  watch(['./frontend/**/*.pug'], function() {
+    gulp.start('pug');
+  });
+});
+
+gulp.task('default', ['scripts', 'maps', 'pug', 'watchJS', 'watchPug']);
