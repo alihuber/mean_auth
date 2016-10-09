@@ -30,6 +30,21 @@
       }
     };
 
+    var isAdmin = function() {
+      var token = getToken();
+      var payload;
+
+      if(token) {
+        payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+
+        return payload.isAdmin;
+      } else {
+        return false;
+      }
+    };
+
     var currentUser = function() {
       if(isLoggedIn()) {
         var token   = getToken();
@@ -64,6 +79,7 @@
       saveToken  : saveToken,
       getToken   : getToken,
       isLoggedIn : isLoggedIn,
+      isAdmin    : isAdmin,
       register   : register,
       login      : login,
       logout     : logout

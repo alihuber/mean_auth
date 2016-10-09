@@ -2,7 +2,11 @@
 
   angular
     .module('frontend')
-    .controller('navigationCtrl', navigationCtrl);
+    .component('navigation', {
+      templateUrl: '/common/components/navigation/navigation.template.html',
+      controller: navigationCtrl,
+      controllerAs: 'vm'
+    });
 
   navigationCtrl.$inject = ['authentication'];
   function navigationCtrl(authentication) {
