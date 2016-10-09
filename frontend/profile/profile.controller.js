@@ -5,16 +5,16 @@
   }
 
   angular
-    .module('meanApp')
+    .module('frontend')
     .controller('profileCtrl', profileCtrl);
 
-  profileCtrl.$inject = ['$location', 'meanData'];
-  function profileCtrl($location, meanData) {
+  profileCtrl.$inject = ['$location', 'profileData'];
+  function profileCtrl($location, profileData) {
     var vm = this;
 
     vm.user = {};
 
-    meanData.getProfile()
+    profileData.getProfile()
       .success(function(data) {
         vm.user = data;
       })

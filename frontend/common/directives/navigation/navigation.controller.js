@@ -1,7 +1,7 @@
 (function() {
 
   angular
-    .module('meanApp')
+    .module('frontend')
     .controller('navigationCtrl', navigationCtrl);
 
   navigationCtrl.$inject = ['authentication'];

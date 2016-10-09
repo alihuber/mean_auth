@@ -1,11 +1,11 @@
 (function() {
 
   angular
-    .module('meanApp')
-    .service('meanData', meanData);
+    .module('frontend')
+    .service('profileData', profileData);
 
-  meanData.$inject = ['$http', 'authentication'];
-  function meanData($http, authentication) {
+  profileData.$inject = ['$http', 'authentication'];
+  function profileData($http, authentication) {
 
     var getProfile = function() {
       return $http.get('/api/profile', {

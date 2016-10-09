@@ -21,10 +21,11 @@ module.exports.register = function(req, res) {
     if(err) {
       // unique entry violation
       if(err.message.includes('E11000')) {
-        res.status(401).json('Please choose a different user name.');
+        var message = 'Please choose a different user name';
+        sendJSONresponse(res, 401, { 'message': message });
       } else {
         // other database error
-        res.status(401).json(err.message);
+        sendJSONresponse(res, 401, { 'message': err.message });
       }
       return;
     }

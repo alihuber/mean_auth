@@ -1,7 +1,7 @@
 (function() {
 
   angular
-  .module('meanApp')
+  .module('frontend')
   .factory('credentialsForm', credentialsForm);
 
   function credentialsForm() {

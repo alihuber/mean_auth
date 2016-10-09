@@ -1,18 +1,18 @@
 (function() {
 
   angular
-    .module('meanApp')
+    .module('frontend')
     .service('authentication', authentication);
 
   authentication.$inject = ['$http', '$window'];
   function authentication($http, $window) {
 
     var saveToken = function(token) {
-      $window.localStorage['mean-token'] = token;
+      $window.localStorage['session-token'] = token;
     };
 
     var getToken = function() {
-      return $window.localStorage['mean-token'];
+      return $window.localStorage['session-token'];
     };
 
     var isLoggedIn = function() {
@@ -37,7 +37,7 @@
         payload     = $window.atob(payload);
         payload     = JSON.parse(payload);
         return {
-          isAdmin: payload.isAdmin,
+          isAdmin  : payload.isAdmin,
           username : payload.username
         };
       }
@@ -56,17 +56,17 @@
     };
 
     var logout = function() {
-      $window.localStorage.removeItem('mean-token');
+      $window.localStorage.removeItem('session-token');
     };
 
     return {
-      currentUser : currentUser,
-      saveToken : saveToken,
-      getToken : getToken,
+      currentUser: currentUser,
+      saveToken  : saveToken,
+      getToken   : getToken,
       isLoggedIn : isLoggedIn,
-      register : register,
-      login : login,
-      logout : logout
+      register   : register,
+      login      : login,
+      logout     : logout
     };
   }
 

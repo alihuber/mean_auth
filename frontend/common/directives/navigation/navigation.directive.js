@@ -1,7 +1,7 @@
 (function() {
 
   angular
-    .module('meanApp')
+    .module('frontend')
     .directive('navigation', navigation);
 
   function navigation() {

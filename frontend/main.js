@@ -1,5 +1,5 @@
 (function() {
-  angular.module('meanApp', ['ngRoute', 'formly', 'formlyBootstrap']);
+  angular.module('frontend', ['ngRoute', 'formly', 'formlyBootstrap']);
 
   function config($routeProvider, $locationProvider) {
     $routeProvider
@@ -45,7 +45,7 @@
   
   // order on angular module: .config(), .run(), controller()
   angular
-  .module('meanApp')
+  .module('frontend')
   .config(['$routeProvider', '$locationProvider', config])
   .run(['$rootScope', '$location', 'authentication', run]);
 

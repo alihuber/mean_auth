@@ -1,7 +1,7 @@
 (function() {
 
   angular
-    .module('meanApp')
+    .module('frontend')
     .controller('registerCtrl', registerCtrl);
 
   registerCtrl.$inject = ['$location', 'authentication', 'credentialsForm'];
@@ -19,7 +19,7 @@
       authentication
         .register(vm.credentials)
         .error(function(err) {
-          vm.message = err;
+          vm.message = err.message;
           $location.path('register');
         })
         .then(function() {
