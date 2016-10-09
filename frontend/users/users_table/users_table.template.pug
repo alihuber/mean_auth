@@ -1,0 +1,17 @@
+table.table
+  thead
+    tr
+      th Id
+      th Username
+      th Created at
+      th Updated at
+      th Admin
+  tbody
+    tr(ng-repeat="user in vm.users")
+      td {{ user._id }}
+      td {{ user.username }}
+      td {{ user.createdAt }}
+      td {{ user.updatedAt }}
+      td
+        span.glyphicon.glyphicon-ok(ng-if='user.isAdmin' aria-hidden='true')
+        span.glyphicon.glyphicon-remove(ng-if='!user.isAdmin' aria-hidden='true')

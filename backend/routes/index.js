@@ -8,6 +8,7 @@ var auth    = jwt({ secret: 'MY_SECRET', requestProperty: 'payload' });
 
 var profileController = require('../controllers/profile');
 var authController    = require('../controllers/authentication');
+var usersController   = require('../controllers/users');
 
 // jwt middleware will attach a property set by "requestProperty: 'foo'" (like
 // above) to the request object (default: "req.user"). So every request object
@@ -17,5 +18,7 @@ router.get('/profile', auth, profileController.profileRead);
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+
+router.get('/users', auth, usersController.fetchUsers);
 
 module.exports = router;

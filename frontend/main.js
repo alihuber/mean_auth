@@ -23,6 +23,11 @@
         controller: 'profileCtrl',
         controllerAs: 'vm'
       })
+      .when('/users', {
+        templateUrl: 'users/users.view.html',
+        controller: 'userCtrl',
+        controllerAs: 'vm'
+      })
       .when('/logout', {
         templateUrl: 'home/home.view.html',
         controller: 'logoutCtrl',
@@ -38,6 +43,13 @@
     $rootScope.$on('$routeChangeStart',
       function() {
         if($location.path() === '/profile' && !authentication.isLoggedIn()) {
+          $location.path('/');
+        }
+        if($location.path() === '/users' && !authentication.isLoggedIn()) {
+          $location.path('/');
+        }
+        if($location.path() === '/users' &&
+            authentication.isLoggedIn() && !authentication.isAdmin()) {
           $location.path('/');
         }
       });

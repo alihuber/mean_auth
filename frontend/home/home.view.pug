@@ -1,7 +1,7 @@
 // navigation directive inserted here
 navigation
 
-.container(ng-show='!vm.isLoggedIn')
+.container(ng-if='!vm.isLoggedIn')
   h1 Hello there
   p
     | Won't you please 
@@ -10,9 +10,13 @@ navigation
     a(href='register' id='register_link') register
     | ?
 
-.container(ng-show='vm.isLoggedIn && !vm.isAdmin')
+.container(ng-if='vm.isLoggedIn && !vm.isAdmin')
   h1 User dashboard
 
 
-.container(ng-show='vm.isLoggedIn && vm.isAdmin')
-  h1 Admin dashboard
+.container(ng-if='vm.isLoggedIn && vm.isAdmin')
+  .row
+    .col-md-8
+      h1 Admin dashboard
+      h2 Users
+      users_table
