@@ -82,10 +82,9 @@ describe('Register endpoint', function () {
         .end(function(err, res) {
           res.status.should.equal(200);
           res.text.should.include('token');
-          mongoose.Promise = global.Promise;
           var promise = User.find({ username: 'new_user' }).exec();
           promise.then(function(users) {
-            users.size().should.equal(1);
+            users.length.should.equal(1);
           });
           done();
       });

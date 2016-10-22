@@ -9,10 +9,9 @@ var User         = mongoose.model('User');
 var supertest    = require("supertest");
 var server       = supertest.agent("http://localhost:3001");
 var jwt          = require('jsonwebtoken');
-mongoose.Promise = global.Promise;
 
-describe('Users endpoint', function () {
-  after(function(done) {
+describe('Single user endpoint', function () {
+  afterEach(function(done) {
     console.log('resetting test database...');
     mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', function() {
         User.collection.remove();
@@ -20,10 +19,10 @@ describe('Users endpoint', function () {
     done();
   });
 
-  describe('requesting /api/users/:id with no auth header', function() {
+  describe('requesting /api/user/:id with no auth header', function() {
     it('should return 401', function(done) {
       server
-        .get('/api/users/123')
+        .get('/api/user/123')
         .expect("Content-type",/json/)
         .expect(401)
         .end(function(err, res) {
@@ -34,11 +33,11 @@ describe('Users endpoint', function () {
     });
   });
 
-  describe('requesting /api/users/:id with wrong auth header', function() {
+  describe('requesting /api/user/:id with wrong auth header', function() {
     it('should return 401', function(done) {
       // no _id property
       server
-        .get('/api/users/123')
+        .get('/api/user/123')
         .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
              'eyJ1c2VybmFtZSI6InJlZ2lzdGVyZWQiLCJleHAiOjE0NzA1NjgyMTEsImlhdCI' +
              '6MTQ2OTk2MzQxMX0.UiSO2PefzfEVIrqBCJzIxBfXjJvc7_pAD2n96gajs5A')
@@ -52,7 +51,7 @@ describe('Users endpoint', function () {
     });
   });
 
-  describe('requesting /api/users/:id with non-admin user', function() {
+  describe('requesting /api/user/:id with non-admin user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user      = new User();
@@ -75,7 +74,7 @@ describe('Users endpoint', function () {
           exp: parseInt(expiry.getTime() / 1000),
         }, "MY_SECRET");
         server
-          .get('/api/users/123')
+          .get('/api/user/123')
           .set('Authorization', 'Bearer ' + token)
           .expect("Content-type",/json/)
           .expect(401)
@@ -88,7 +87,7 @@ describe('Users endpoint', function () {
       });
     });
 
-  describe('requesting /api/users/:id with admin user', function() {
+  describe('requesting /api/user/:id with admin user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user      = new User();
@@ -112,7 +111,7 @@ describe('Users endpoint', function () {
           exp: parseInt(expiry.getTime() / 1000),
         }, "MY_SECRET");
         server
-          .get('/api/users/123')
+          .get('/api/user/123')
           .set('Authorization', 'Bearer ' + token)
           .expect("Content-type",/json/)
           .expect(200)
@@ -125,7 +124,7 @@ describe('Users endpoint', function () {
       });
     });
 
-  describe('requesting /api/users/:id with persisted user', function() {
+  describe('requesting /api/user/:id with persisted user', function() {
     before(function(done) {
       console.log('populating test database...');
       var user1      = new User();
@@ -157,7 +156,7 @@ describe('Users endpoint', function () {
             exp: parseInt(expiry.getTime() / 1000),
           }, "MY_SECRET");
           server
-            .get('/api/users/' + userId)
+            .get('/api/user/' + userId)
             .set('Authorization', 'Bearer ' + token)
             .expect("Content-type",/json/)
             .expect(200)

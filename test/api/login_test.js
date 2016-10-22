@@ -10,7 +10,7 @@ var supertest = require("supertest");
 var server    = supertest.agent("http://localhost:3001");
 
 describe('Login endpoint', function () {
-  after(function(done) {
+  afterEach(function(done) {
     console.log('resetting test database...');
     mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', function() {
         User.collection.remove();
