@@ -8,7 +8,7 @@ navigation
         a(href='login') log in 
         |  instead.
       .alert.alert-danger(id='alert_div', role='alert',
-        ng-show='vm.message') {{vm.message}}
+        ng-if='vm.message') {{vm.message}}
       form(ng-submit='vm.onSubmit()')
         formly-form(model='vm.credentials',
           fields='vm.credentialsFields' form='vm.credentialsForm')

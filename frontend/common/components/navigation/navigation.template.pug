@@ -7,9 +7,9 @@
       ul.nav.navbar-nav.navbar-right
         li(ng-hide='vm.isLoggedIn')
           a(href='login') Sign in
-        li(ng-show='vm.isLoggedIn && vm.isAdmin')
+        li(ng-if='vm.isLoggedIn && vm.isAdmin')
           a(href='admin') Admin
-        li(ng-show='vm.isLoggedIn')
+        li(ng-if='vm.isLoggedIn')
           a(href='profile' id='profile_link') {{ vm.currentUser.username }}'s profile
-        li(ng-show='vm.isLoggedIn')
+        li(ng-if='vm.isLoggedIn')
           a(href='logout' id='logout_link') Log out
