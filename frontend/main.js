@@ -24,7 +24,15 @@
         controllerAs: 'vm'
       })
       .when('/users', {
-        templateUrl: 'users/users.view.html',
+        templateUrl: 'users/users.view.html'
+      })
+      .when('/user/id/:id', {
+        templateUrl: 'users/user.view.html',
+        controller: 'userCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/user/id', {
+        templateUrl: 'users/user.view.html',
         controller: 'userCtrl',
         controllerAs: 'vm'
       })

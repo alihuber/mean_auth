@@ -1,0 +1,24 @@
+navigation
+.container
+  .row
+    .col-md-8
+      h1.form-signin-heading(ng-switch='vm.user.username')
+        newHeader(ng-switch-when='undefined') New user
+        defaultHeader(ng-switch-default) Edit user
+      .alert.alert-danger(id='alert_div', role='alert',
+        ng-if='vm.message') {{vm.message}}
+      form(id='user_form')
+        formly-form(model='vm.credentials',
+          fields='vm.userFields' form='vm.userForm')
+          buttonRow(ng-switch='vm.user.username')
+            newButton(ng-switch-when='undefined')
+              button.btn.btn-success(id='user_create_button'
+              ng-click='vm.createUser()') Create
+            editButtons(ng-switch-default)
+              .row
+                .col-md-6.text-left
+                  button.btn.btn-primary(id='user_save_button'
+                  ng-click='vm.saveUser()') Save
+                .col-md-6.text-right
+                  button.btn.btn-danger.align-right(id='user_delete_button'
+                  ng-click='vm.deleteUser(vm.user._id)') Delete

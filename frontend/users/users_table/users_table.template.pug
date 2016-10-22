@@ -1,3 +1,9 @@
+.alert.alert-danger(id='alert_div', role='alert',
+  ng-if='vm.errorMessage') {{vm.errorMessage}}
+.alert.alert-success(id='alert_div', role='alert',
+  ng-if='vm.successMessage') {{vm.successMessage}}
+button.btn.btn-success(id='user_create_button' ng-click='vm.newUser()') Create new user
+
 table.table
   thead
     tr
@@ -5,13 +11,17 @@ table.table
       th Username
       th Created at
       th Updated at
-      th Admin
+      th Admin?
+      th Edit
   tbody
     tr(ng-repeat="user in vm.users")
       td {{ user._id }}
       td {{ user.username }}
-      td {{ user.createdAt }}
-      td {{ user.updatedAt }}
+      td {{ user.createdAt | date: "dd.MM.yyyy ', 'HH:mm" }}
+      td {{ user.updatedAt | date: "dd.MM.yyyy ', 'HH:mm" }}
       td
-        span.glyphicon.glyphicon-ok(ng-if='user.isAdmin' aria-hidden='true')
-        span.glyphicon.glyphicon-remove(ng-if='!user.isAdmin' aria-hidden='true')
+        span.glyphicon.glyphicon-check(ng-if='user.isAdmin' aria-hidden='true')
+        span.glyphicon.glyphicon-unchecked(ng-if='!user.isAdmin' aria-hidden='true')
+      td
+        a(href='#' ng-click='vm.editUser(user._id)')
+          span.glyphicon.glyphicon-edit(aria-hidden='true')

@@ -20,6 +20,9 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 router.get('/users', auth, usersController.fetchUsers);
-router.get('/users/:id', auth, usersController.findUser);
+router.get('/user/:id', auth, usersController.findUser);
+router.delete('/user/:id', auth, usersController.deleteUser);
+router.put('/user/:id', auth, usersController.updateUser);
+router.post('/user', auth, usersController.createUser);
 
 module.exports = router;
