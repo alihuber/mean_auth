@@ -8,7 +8,6 @@ require('../../backend/models/user');
 var User      = mongoose.model('User');
 var supertest = require("supertest");
 var server    = supertest.agent("http://localhost:3001");
-mongoose.Promise = global.Promise;
 
 describe('Register endpoint', function () {
   after(function(done) {

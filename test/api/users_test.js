@@ -9,7 +9,6 @@ var User         = mongoose.model('User');
 var supertest    = require("supertest");
 var server       = supertest.agent("http://localhost:3001");
 var jwt          = require('jsonwebtoken');
-mongoose.Promise = global.Promise;
 
 describe('Users endpoint', function () {
   after(function(done) {

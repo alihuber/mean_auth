@@ -8,6 +8,10 @@ var bodyParser   = require('body-parser');
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 
+
+// use ES6 promises
+mongoose.Promise = global.Promise;
+
 // load user mongoose schema before passport
 require('./backend/models/user');
 require('./backend/config/passport');
