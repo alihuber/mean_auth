@@ -11,10 +11,12 @@ module.exports = {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
-      .assert.containsText("div#alert_div", "")
+      .expect.element('body').to.not.have.css("div#alert_div");
+    browser
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')
-      .click('#login_button');
+      .click('#login_button')
+      .waitForElementVisible('a#profile_link', 1000);
     browser
       .click('#home_link')
       .expect.element('body').text.to.not.contain('Users');
@@ -26,10 +28,12 @@ module.exports = {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
-      .assert.containsText("div#alert_div", "")
+      .expect.element('body').to.not.have.css("div#alert_div");
+    browser
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
-      .click('#login_button');
+      .click('#login_button')
+      .waitForElementVisible('a#profile_link', 1000);
     browser
       .click('#home_link')
       .expect.element('body').text.to.contain('Users');

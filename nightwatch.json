@@ -14,10 +14,10 @@
     "port" : 4444,
     "cli_args" : {
       "webdriver.chrome.driver" : "",
-      "webdriver.ie.driver" : ""
+      "webdriver.ie.driver" : "",
+      "webdriver.gecko.driver": "geckodriver"
     }
   },
-
   "test_settings" : {
     "default" : {
       "launch_url" : "http://localhost:3001",
@@ -29,9 +29,10 @@
         "path" : ""
       },
       "desiredCapabilities": {
-        "browserName": "chrome",
+        "browserName": "firefox",
         "javascriptEnabled": true,
-        "acceptSslCerts": false
+        "acceptSslCerts": true,
+        "marionette": true
       }
     }
   }
