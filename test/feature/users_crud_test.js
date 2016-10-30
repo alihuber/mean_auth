@@ -1,7 +1,7 @@
-var should     = require('chai').should();
+const should   = require('chai').should();
 
 module.exports = {
-  'Creating new user without all credentials' : function (browser) {
+  'Creating new user without all credentials' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -22,7 +22,7 @@ module.exports = {
       .end();
   },
 
-  'Creating new user' : function (browser) {
+  'Creating new user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -46,7 +46,7 @@ module.exports = {
       .end();
   },
 
-  'Accessing profile page with created user' : function (browser) {
+  'Accessing profile page with created user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -63,7 +63,7 @@ module.exports = {
       .end();
   },
 
-  'Create with duplicate username' : function (browser) {
+  'Create with duplicate username' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -83,7 +83,7 @@ module.exports = {
       .end();
   },
 
-  'Updating user without all credentials' : function (browser) {
+  'Updating user without all credentials' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -104,7 +104,7 @@ module.exports = {
       .end();
   },
 
-  'Updating user with valid data' : function (browser) {
+  'Updating user with valid data' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -112,7 +112,7 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
       .waitForElementVisible('a#profile_link', 1000);
-    browser.elements('class name', 'glyphicon-check', function(res) {
+    browser.elements('class name', 'glyphicon-check', (res) => {
       res.value.length.should.equal(1);
     });
     browser
@@ -126,14 +126,14 @@ module.exports = {
       .waitForElementVisible('table.table', 1000);
     browser
       .assert.containsText('div#alert_div', 'successful');
-    browser.elements('class name', 'glyphicon-check', function(res) {
+    browser.elements('class name', 'glyphicon-check', (res) => {
       res.value.length.should.equal(2);
     });
     browser
       .end();
   },
 
-  'Deleting user' : function (browser) {
+  'Deleting user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)

@@ -1,5 +1,5 @@
 module.exports = {
-  'Accessing profile page, not logged in' : function (browser) {
+  'Accessing profile page, not logged in' : (browser) => {
     browser
       .url('http://localhost:3001/profile')
       .waitForElementVisible('navigation', 1000)
@@ -7,7 +7,7 @@ module.exports = {
       .end();
   },
 
-  'Accessing profile page as logged in user' : function (browser) {
+  'Accessing profile page as logged in user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)

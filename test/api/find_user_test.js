@@ -1,31 +1,31 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-var app       = require('../../app');
-var mongoose  = require('mongoose');
-var should    = require('chai').should();
+const app       = require('../../app');
+const mongoose  = require('mongoose');
+const should    = require('chai').should();
 require('../../backend/models/user');
-var User      = mongoose.model('User');
-var supertest = require('supertest');
-var server    = supertest.agent('http://localhost:3001');
-var jwt       = require('jsonwebtoken');
+const User      = mongoose.model('User');
+const supertest = require('supertest');
+const server    = supertest.agent('http://localhost:3001');
+const jwt       = require('jsonwebtoken');
 
-describe('Single user endpoint', function () {
-  afterEach(function(done) {
+describe('Single user endpoint', () => {
+  afterEach((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', function() {
+    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
         User.collection.remove();
     });
     done();
   });
 
-  describe('requesting /api/user/:id with no auth header', function() {
-    it('should return 401', function(done) {
+  describe('requesting /api/user/:id with no auth header', () => {
+    it('should return 401', (done) => {
       server
         .get('/api/user/123')
         .expect('Content-type',/json/)
         .expect(401)
-        .end(function(err, res) {
+        .end((err, res) => {
           res.status.should.equal(401);
           res.text.should.include('UnauthorizedError');
           done();
@@ -33,8 +33,8 @@ describe('Single user endpoint', function () {
     });
   });
 
-  describe('requesting /api/user/:id with wrong auth header', function() {
-    it('should return 401', function(done) {
+  describe('requesting /api/user/:id with wrong auth header', () => {
+    it('should return 401', (done) => {
       // no _id property
       server
         .get('/api/user/123')
@@ -43,7 +43,7 @@ describe('Single user endpoint', function () {
              '6MTQ2OTk2MzQxMX0.UiSO2PefzfEVIrqBCJzIxBfXjJvc7_pAD2n96gajs5A')
         .expect('Content-type',/json/)
         .expect(401)
-        .end(function(err, res) {
+        .end((err, res) => {
           res.status.should.equal(401);
           res.text.should.include('UnauthorizedError');
           done();
@@ -51,22 +51,22 @@ describe('Single user endpoint', function () {
     });
   });
 
-  describe('requesting /api/user/:id with non-admin user', function() {
-    before(function(done) {
+  describe('requesting /api/user/:id with non-admin user', () => {
+    before((done) => {
       console.log('populating test database...');
-      var user      = new User();
+      let user      = new User();
       user.username = 'registered';
       user.setPassword('registered');
       user.save();
       done();
     });
 
-    it('should return 401', function(done) {
-      var token    = '';
-      var userId   = '';
-      User.find({username: 'registered'}).then(function(users, err) {
+    it('should return 401', (done) => {
+      let token    = '';
+      let userId   = '';
+      User.find({username: 'registered'}).then((users, err) => {
         userId     = users[0]._id;
-        var expiry = new Date();
+        let expiry = new Date();
         expiry.setDate(expiry.getDate() + 7);
         token      = jwt.sign({
           _id: users[0]._id,
@@ -78,7 +78,7 @@ describe('Single user endpoint', function () {
           .set('Authorization', 'Bearer ' + token)
           .expect('Content-type',/json/)
           .expect(401)
-          .end(function(err, res) {
+          .end((err, res) => {
             res.status.should.equal(401);
             res.text.should.include('UnauthorizedError');
             done();
@@ -87,10 +87,10 @@ describe('Single user endpoint', function () {
       });
     });
 
-  describe('requesting /api/user/:id with admin user', function() {
-    before(function(done) {
+  describe('requesting /api/user/:id with admin user', () => {
+    before((done) => {
       console.log('populating test database...');
-      var user      = new User();
+      let user      = new User();
       user.username = 'admin';
       user.setPassword('admin');
       user.isAdmin  = true;
@@ -98,12 +98,12 @@ describe('Single user endpoint', function () {
       done();
     });
 
-    it('should return 200', function(done) {
-      var token    = '';
-      var userId   = '';
-      User.find({username: 'admin'}).then(function(users, err) {
+    it('should return 200', (done) => {
+      let token    = '';
+      let userId   = '';
+      User.find({username: 'admin'}).then((users, err) => {
         userId     = users[0]._id;
-        var expiry = new Date();
+        let expiry = new Date();
         expiry.setDate(expiry.getDate() + 7);
         token      = jwt.sign({
           _id: users[0]._id,
@@ -115,7 +115,7 @@ describe('Single user endpoint', function () {
           .set('Authorization', 'Bearer ' + token)
           .expect('Content-type',/json/)
           .expect(200)
-          .end(function(err, res) {
+          .end((err, res) => {
             res.status.should.equal(200);
             res.text.should.include('{}');
             done();
@@ -124,15 +124,15 @@ describe('Single user endpoint', function () {
       });
     });
 
-  describe('requesting /api/user/:id with persisted user', function() {
-    before(function(done) {
+  describe('requesting /api/user/:id with persisted user', () => {
+    before((done) => {
       console.log('populating test database...');
-      var user1      = new User();
+      let user1      = new User();
       user1.username = 'admin';
       user1.setPassword('admin');
       user1.isAdmin  = true;
       user1.save();
-      var user2      = new User();
+      let user2      = new User();
       user2.username = 'some.user';
       user2.setPassword('some.password');
       user2.isAdmin  = false;
@@ -140,15 +140,15 @@ describe('Single user endpoint', function () {
       done();
     });
 
-    it('should return 200 and user data', function(done) {
-      var token       = '';
-      var adminUserId = '';
-      var userId      = '';
-      User.find({username: 'some.user'}).then(function(users, err) {
+    it('should return 200 and user data', (done) => {
+      let token       = '';
+      let adminUserId = '';
+      let userId      = '';
+      User.find({username: 'some.user'}).then((users, err) => {
         userId = users[0]._id;
-        User.find({username: 'admin'}).then(function(users, err) {
+        User.find({username: 'admin'}).then((users, err) => {
           adminUserId = users[0]._id;
-          var expiry  = new Date();
+          let expiry  = new Date();
           expiry.setDate(expiry.getDate() + 7);
           token = jwt.sign({
             _id: users[0]._id,
@@ -160,7 +160,7 @@ describe('Single user endpoint', function () {
             .set('Authorization', 'Bearer ' + token)
             .expect('Content-type',/json/)
             .expect(200)
-            .end(function(err, res) {
+            .end((err, res) => {
               res.status.should.equal(200);
               res.text.should.include('"username":"some.user"');
               res.text.should.include('"isAdmin":false');

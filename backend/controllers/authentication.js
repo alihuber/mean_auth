@@ -1,27 +1,27 @@
-var passport = require('passport');
-var mongoose = require('mongoose');
-var User     = mongoose.model('User');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const User     = mongoose.model('User');
 
-var sendJSONresponse = function(res, status, content) {
+const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
 };
 
-module.exports.register = function(req, res) {
+module.exports.register = (req, res) => {
 
   if(!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, { 'message': 'All fields required' });
     return;
   }
 
-  var user      = new User();
+  let user      = new User();
   user.username = req.body.username;
   user.setPassword(req.body.password);
-  user.save(function(err) {
+  user.save((err) => {
     if(err) {
       // unique entry violation
       if(err.message.includes('E11000')) {
-        var message = 'Please choose a different user name';
+        let message = 'Please choose a different user name';
         sendJSONresponse(res, 401, { 'message': message });
       } else {
         // other database error
@@ -29,22 +29,22 @@ module.exports.register = function(req, res) {
       }
       return;
     }
-    var token;
+    let token;
     token = user.generateJwt();
     res.status(200);
     res.json({ 'token' : token });
   });
 };
 
-module.exports.login = function(req, res) {
+module.exports.login = (req, res) => {
 
   if(!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, { 'message': 'All fields required' });
     return;
   }
 
-  passport.authenticate('local', function(err, user, info) {
-    var token;
+  passport.authenticate('local', (err, user, info) => {
+    let token;
 
     // If Passport throws/catches an error
     if(err) {

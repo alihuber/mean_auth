@@ -1,5 +1,5 @@
 module.exports = {
-  'Homepage test' : function (browser) {
+  'Homepage test' : (browser) => {
     browser
       .url('http://localhost:3001')
       .waitForElementVisible('navigation', 1000)

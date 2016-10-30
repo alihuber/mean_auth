@@ -1,16 +1,16 @@
-var mongoose = require('mongoose');
-var User     = mongoose.model('User');
+const mongoose = require('mongoose');
+const User     = mongoose.model('User');
 
-var sendJSONresponse = function(res, status, content) {
+const sendJSONresponse = (res, status, content) => {
   res.status(status);
   res.json(content);
 };
 
-module.exports.fetchUsers = function(req, res) {
+module.exports.fetchUsers = (req, res) => {
   if(!req.payload._id) {
     res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
   } else {
-    User.findById(req.payload._id).exec(function(err, user) {
+    User.findById(req.payload._id).exec((err, user) => {
       if(err) {
         res.status(404).json(err);
         return;
@@ -21,7 +21,7 @@ module.exports.fetchUsers = function(req, res) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
           User.find({},
-              'username isAdmin createdAt updatedAt', function(err, users) {
+              'username isAdmin createdAt updatedAt', (err, users) => {
             res.status(200).json({"users": users});
           });
         }
@@ -30,11 +30,11 @@ module.exports.fetchUsers = function(req, res) {
   }
 };
 
-module.exports.findUser = function(req, res) {
+module.exports.findUser = (req, res) => {
   if(!req.payload._id) {
     res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
   } else {
-    User.findById(req.payload._id).exec(function(err, user) {
+    User.findById(req.payload._id).exec((err, user) => {
       if(err) {
         res.status(404).json(err);
         return;
@@ -44,9 +44,9 @@ module.exports.findUser = function(req, res) {
         if(!user.isAdmin) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
-          var userId = req.params.id;
+          let userId = req.params.id;
           User.findById(userId,
-              'username isAdmin createdAt updatedAt', function(err, user) {
+              'username isAdmin createdAt updatedAt', (err, user) => {
             res.status(200).json({"user": user});
           });
         }
@@ -55,7 +55,7 @@ module.exports.findUser = function(req, res) {
   }
 };
 
-module.exports.createUser = function(req, res) {
+module.exports.createUser = (req, res) => {
   if(!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, { 'message': 'All fields required' });
     return;
@@ -64,7 +64,7 @@ module.exports.createUser = function(req, res) {
   if(!req.payload._id) {
     res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
   } else {
-    User.findById(req.payload._id).exec(function(err, user) {
+    User.findById(req.payload._id).exec((err, user) => {
       if(err) {
         res.status(404).json(err);
         return;
@@ -74,15 +74,15 @@ module.exports.createUser = function(req, res) {
         if(!user.isAdmin) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
-          var newUser      = new User();
+          let newUser      = new User();
           newUser.username = req.body.username;
           newUser.isAdmin  = req.body.isAdmin;
           newUser.setPassword(req.body.password);
-          newUser.save(function(err) {
+          newUser.save((err) => {
             if(err) {
               // unique entry violation
               if(err.message.includes('E11000')) {
-                var message = 'Please choose a different user name';
+                let message = 'Please choose a different user name';
                 sendJSONresponse(res, 500, { 'message': message });
               } else {
                 // other database error
@@ -98,11 +98,11 @@ module.exports.createUser = function(req, res) {
   }
 };
 
-module.exports.deleteUser = function(req, res) {
+module.exports.deleteUser = (req, res) => {
   if(!req.payload._id) {
     res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
   } else {
-    User.findById(req.payload._id).exec(function(err, user) {
+    User.findById(req.payload._id).exec((err, user) => {
       if(err) {
         res.status(404).json(err);
         return;
@@ -112,9 +112,9 @@ module.exports.deleteUser = function(req, res) {
         if(!user.isAdmin) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
-          var userId = req.params.id;
-          User.findById(userId, function(err, user) {
-            user.remove(function(err, user) {
+          let userId = req.params.id;
+          User.findById(userId, (err, user) => {
+            user.remove((err, user) => {
               if(err) {
                 res.status(500).json(err);
               }
@@ -146,7 +146,7 @@ module.exports.updateUser = function(req, res) {
         if(!user.isAdmin) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
-          var userId = req.params.id;
+          let userId = req.params.id;
           User.findById(userId, function(err, updatedUser) {
             updatedUser.username = req.body.username;
             updatedUser.isAdmin  = req.body.isAdmin;
@@ -155,7 +155,7 @@ module.exports.updateUser = function(req, res) {
               if(err) {
                 // unique entry violation
                 if(err.message.includes('E11000')) {
-                  var message = 'Please choose a different user name';
+                  let message = 'Please choose a different user name';
                   sendJSONresponse(res, 500, { 'message': message });
                 } else {
                   // other database error

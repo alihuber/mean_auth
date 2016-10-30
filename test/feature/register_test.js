@@ -1,5 +1,5 @@
 module.exports = {
-  'Register with no credentials' : function (browser) {
+  'Register with no credentials' : (browser) => {
     browser
       .url('http://localhost:3001/register')
       .waitForElementVisible('navigation', 1000)
@@ -14,7 +14,7 @@ module.exports = {
       .end();
   },
 
-  'Register with taken credentials' : function (browser) {
+  'Register with taken credentials' : (browser) => {
     browser
       .url('http://localhost:3001/register')
       .waitForElementVisible('navigation', 1000)
@@ -27,7 +27,7 @@ module.exports = {
       .end();
   },
 
-  'Register and authenticate with correct credentials' : function (browser) {
+  'Register and authenticate with correct credentials' : (browser) => {
     browser
       .url('http://localhost:3001/register')
       .waitForElementVisible('navigation', 1000)

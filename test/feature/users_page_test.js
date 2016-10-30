@@ -1,5 +1,5 @@
 module.exports = {
-  'Accessing users page, not logged in' : function (browser) {
+  'Accessing users page, not logged in' : (browser) => {
     browser
       .url('http://localhost:3001/users')
       .waitForElementVisible('navigation', 1000)
@@ -7,7 +7,7 @@ module.exports = {
       .end();
   },
 
-  'Accessing users page as non-admin user' : function (browser) {
+  'Accessing users page as non-admin user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -24,7 +24,7 @@ module.exports = {
       .end();
   },
 
-  'Accessing users page as admin user' : function (browser) {
+  'Accessing users page as admin user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)

@@ -1,5 +1,5 @@
 module.exports = {
-  'Login with no credentials' : function (browser) {
+  'Login with no credentials' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -14,7 +14,7 @@ module.exports = {
       .end();
   },
 
-  'Login with wrong credentials' : function (browser) {
+  'Login with wrong credentials' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -27,7 +27,7 @@ module.exports = {
       .end();
   },
 
-  'Login as normal user' : function (browser) {
+  'Login as normal user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -46,7 +46,7 @@ module.exports = {
       .end();
   },
 
-  'Login as admin user' : function (browser) {
+  'Login as admin user' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
