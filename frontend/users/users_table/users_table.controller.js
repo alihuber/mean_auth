@@ -11,7 +11,7 @@
   usersTableCtrl.$inject = ['$location', 'userData', 'flash'];
   function usersTableCtrl($location, userData, flash) {
     var vm            = this;
-    vm.users          = {};
+    vm.users          = [];
     vm.errorMessage   = flash.getErrorMessage();
     vm.successMessage = flash.getSuccessMessage();
     flash.cleanMessages();

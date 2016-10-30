@@ -56,6 +56,11 @@ module.exports.findUser = function(req, res) {
 };
 
 module.exports.createUser = function(req, res) {
+  if(!req.body.username || !req.body.password) {
+    sendJSONresponse(res, 400, { 'message': 'All fields required' });
+    return;
+  }
+
   if(!req.payload._id) {
     res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
   } else {
@@ -123,10 +128,6 @@ module.exports.deleteUser = function(req, res) {
 };
 
 module.exports.updateUser = function(req, res) {
-  if(req.body.username === '' || req.body.password === '') {
-    sendJSONresponse(res, 400, { 'message': 'All fields required' });
-    return;
-  }
   if(!req.body.username || !req.body.password) {
     sendJSONresponse(res, 400, { 'message': 'All fields required' });
     return;

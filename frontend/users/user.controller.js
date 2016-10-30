@@ -25,7 +25,7 @@
         flash.setSuccessMessage("User was successfully created.");
         $location.path('users');
       })
-      .error(function(e) {
+      .error(function(err) {
         vm.message = err.message;
         $location.path($location.path());
       });
@@ -36,7 +36,7 @@
         flash.setSuccessMessage("User was successfully deleted.");
         $location.path('users');
       })
-      .error(function(e) {
+      .error(function(err) {
         vm.message = err.message;
         $location.path($location.path());
       });

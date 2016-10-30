@@ -14,7 +14,7 @@ table.table
       th Admin?
       th Edit
   tbody
-    tr(ng-repeat="user in vm.users")
+    tr(ng-repeat="user in vm.users | orderBy: '-updatedAt'")
       td {{ user._id }}
       td {{ user.username }}
       td {{ user.createdAt | date: "dd.MM.yyyy ', 'HH:mm" }}
@@ -23,5 +23,5 @@ table.table
         span.glyphicon.glyphicon-check(ng-if='user.isAdmin' aria-hidden='true')
         span.glyphicon.glyphicon-unchecked(ng-if='!user.isAdmin' aria-hidden='true')
       td
-        a(href='#' ng-click='vm.editUser(user._id)')
+        a(href='#' ng-click='vm.editUser(user._id)' ng-attr-id="{{ 'edit_' + user._id }}")
           span.glyphicon.glyphicon-edit(aria-hidden='true')

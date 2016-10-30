@@ -12,12 +12,12 @@ navigation
           fields='vm.userFields' form='vm.userForm')
           buttonRow(ng-switch='vm.user.username')
             newButton(ng-switch-when='undefined')
-              button.btn.btn-success(id='user_create_button'
+              button.btn.btn-success(id='user_create_button' type='submit'
               ng-click='vm.createUser()') Create
             editButtons(ng-switch-default)
               .row
                 .col-md-6.text-left
-                  button.btn.btn-primary(id='user_save_button'
+                  button.btn.btn-primary(id='user_save_button' type='submit'
                   ng-click='vm.saveUser()') Save
                 .col-md-6.text-right
                   button.btn.btn-danger.align-right(id='user_delete_button'
