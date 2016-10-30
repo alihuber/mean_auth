@@ -11,7 +11,7 @@ module.exports = {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
-      .expect.element('body').to.not.have.css("div#alert_div");
+      .expect.element('body').to.not.have.css('div#alert_div');
     browser
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')

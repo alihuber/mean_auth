@@ -9,7 +9,7 @@ module.exports = {
       .click('#register_button')
       // does not work with firefox
       // .assert.cssClassPresent('div.form-group', 'has-error')
-      .expect.element('body').text.to.not.contain("User dashboard");
+      .expect.element('body').text.to.not.contain('User dashboard');
     browser
       .end();
   },
@@ -18,7 +18,7 @@ module.exports = {
     browser
       .url('http://localhost:3001/register')
       .waitForElementVisible('navigation', 1000)
-      .expect.element('body').to.not.have.css("div#alert_div");
+      .expect.element('body').to.not.have.css('div#alert_div');
     browser
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'some.password')
@@ -31,7 +31,7 @@ module.exports = {
     browser
       .url('http://localhost:3001/register')
       .waitForElementVisible('navigation', 1000)
-      .expect.element('body').to.not.have.css("div#alert_div");
+      .expect.element('body').to.not.have.css('div#alert_div');
     browser
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')
@@ -45,7 +45,7 @@ module.exports = {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
-      .expect.element('body').to.not.have.css("div#alert_div");
+      .expect.element('body').to.not.have.css('div#alert_div');
     browser
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')

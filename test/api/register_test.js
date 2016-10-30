@@ -6,8 +6,8 @@ var mongoose  = require('mongoose');
 var should    = require('chai').should();
 require('../../backend/models/user');
 var User      = mongoose.model('User');
-var supertest = require("supertest");
-var server    = supertest.agent("http://localhost:3001");
+var supertest = require('supertest');
+var server    = supertest.agent('http://localhost:3001');
 
 describe('Register endpoint', function () {
   after(function(done) {
@@ -23,7 +23,7 @@ describe('Register endpoint', function () {
       server
         .post('/api/register')
         .send( {'password': 'some.password'} )
-        .expect("Content-type",/json/)
+        .expect('Content-type',/json/)
         .expect(400)
         .end(function(err, res) {
           res.status.should.equal(400);
@@ -38,7 +38,7 @@ describe('Register endpoint', function () {
       server
         .post('/api/register')
         .send( {'username': 'some.user'} )
-        .expect("Content-type",/json/)
+        .expect('Content-type',/json/)
         .expect(400)
         .end(function(err, res) {
           res.status.should.equal(400);
@@ -62,7 +62,7 @@ describe('Register endpoint', function () {
       server
         .post('/api/register')
         .send( {'username': 'registered', 'password': 'registered'} )
-        .expect("Content-type",/json/)
+        .expect('Content-type',/json/)
         .expect(401)
         .end(function(err, res) {
           res.status.should.equal(401);
@@ -77,7 +77,7 @@ describe('Register endpoint', function () {
       server
         .post('/api/register')
         .send( {'username': 'new_user', 'password': 'new_password'} )
-        .expect("Content-type",/json/)
+        .expect('Content-type',/json/)
         .expect(200)
         .end(function(err, res) {
           res.status.should.equal(200);
