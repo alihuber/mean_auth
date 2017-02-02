@@ -3,6 +3,7 @@ const bcrypt   = require('bcryptjs');
 const jwt      = require('jsonwebtoken');
 const Schema   = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
+const later    = require('later');
 
 const userSchema = new Schema({
   id: ObjectId,
@@ -17,8 +18,11 @@ const userSchema = new Schema({
     minlength: 8,
     required: true
   },
-  isAdmin: { type: Boolean, default: false }
-}, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } });
+  checkInterval: { type: String, default: "every 1 h" },
+  nextEvent: { type: Date },
+  isAdmin: { type: Boolean, default: false } },
+  { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
+);
 
 userSchema.methods.setPassword = function(password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -26,6 +30,11 @@ userSchema.methods.setPassword = function(password) {
 
 userSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
+};
+
+userSchema.methods.setNextEvent = function() {
+  let interval   = later.parse.text(this.checkInterval);
+  this.nextEvent = later.schedule(interval).next(2)[1];
 };
 
 // TODO: MY_SECRET replace with cryptographically strong encrypt key, don't keep

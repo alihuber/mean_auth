@@ -15,8 +15,17 @@
       });
     };
 
+    var updateProfile = function(id, credentials) {
+      return $http.put('/api/profile', credentials, {
+        headers: {
+          Authorization: 'Bearer '+ authentication.getToken()
+        }
+      });
+    };
+
     return {
-      getProfile : getProfile
+      getProfile : getProfile,
+      updateProfile : updateProfile
     };
   }
 

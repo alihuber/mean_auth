@@ -12,6 +12,10 @@ navigation
 
 .container(ng-if='vm.isLoggedIn && !vm.isAdmin')
   h1 User dashboard
+  .alert.alert-danger(id='alert_div', role='alert',
+    ng-if='vm.errorMessage') {{vm.errorMessage}}
+  .alert.alert-success(id='alert_div', role='alert',
+    ng-if='vm.successMessage') {{vm.successMessage}}
 
 
 .container(ng-if='vm.isLoggedIn && vm.isAdmin')

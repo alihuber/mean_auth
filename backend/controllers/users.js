@@ -147,11 +147,11 @@ module.exports.updateUser = function(req, res) {
           res.status(401).json({ "message" : "UnauthorizedError: not allowed" });
         } else {
           let userId = req.params.id;
-          User.findById(userId, function(err, updatedUser) {
-            updatedUser.username = req.body.username;
-            updatedUser.isAdmin  = req.body.isAdmin;
-            updatedUser.setPassword(req.body.password);
-            updatedUser.save(function(err, user) {
+          User.findById(userId, function(err, userToUpdate) {
+            userToUpdate.username = req.body.username;
+            userToUpdate.isAdmin  = req.body.isAdmin;
+            userToUpdate.setPassword(req.body.password);
+            userToUpdate.save(function(err, user) {
               if(err) {
                 // unique entry violation
                 if(err.message.includes('E11000')) {

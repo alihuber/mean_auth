@@ -1,3 +1,5 @@
+process.on(`uncaughtException`, console.error);
+
 const express      = require('express');
 const http         = require('http');
 const path         = require('path');
@@ -7,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const mongoose     = require('mongoose');
 const passport     = require('passport');
-
+const scheduler    = require('./scheduler.js');
 
 // use ES6 promises
 mongoose.Promise = global.Promise;
@@ -99,5 +101,7 @@ app.use((err, req, res, next) => {
 http.createServer(app).listen(app.get('port'), () => {
   console.log('Epress Server listening on port ' + app.get('port'));
 });
+
+scheduler.fetchEvents();
 
 module.exports = app;

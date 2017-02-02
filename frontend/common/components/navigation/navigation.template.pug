@@ -3,13 +3,23 @@
     #navbar-main
       ul.nav.navbar-nav
         li
-          a(href='/' id='home_link') Home
+          a(href='/' id='home_link')
+            span.glyphicon.glyphicon-home(aria-hidden='true')
+            | &nbsp; Home
       ul.nav.navbar-nav.navbar-right
         li(ng-hide='vm.isLoggedIn')
-          a(href='login') Sign in
+          a(href='login')
+            span.glyphicon.glyphicon-log-in(aria-hidden='true')
+            | &nbsp; Sign in
         li(ng-if='vm.isLoggedIn && vm.isAdmin')
-          a(href='admin') Admin
+          a(href='admin')
+            span.glyphicon.glyphicon-wrench(aria-hidden='true')
+            | &nbsp; Admin
         li(ng-if='vm.isLoggedIn')
-          a(href='profile' id='profile_link') {{ vm.currentUser.username }}'s profile
+          a(href='profile' id='profile_link')
+            span.glyphicon.glyphicon-user(aria-hidden='true')
+            | &nbsp; Settings
         li(ng-if='vm.isLoggedIn')
-          a(href='logout' id='logout_link') Log out
+          a(href='logout' id='logout_link')
+            span.glyphicon.glyphicon-log-out(aria-hidden='true')
+            | &nbsp; Log out
