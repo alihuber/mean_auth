@@ -14,7 +14,8 @@ const usersController   = require('../controllers/users');
 // above) to the request object (default: "req.user"). So every request object
 // in subsequent callback functions will have the 'payload' property attached
 // which contains the decoded jwt token contents: _id, username, expires
-router.get('/profile',     auth, profileController.profileRead);
+router.get('/profile',     auth, profileController.fetchProfile);
+router.put('/profile',     auth, profileController.updateProfile);
 
 router.post('/register',   authController.register);
 router.post('/login',      authController.login);
