@@ -1,20 +1,24 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-const app       = require('../../app');
-const mongoose  = require('mongoose');
-const should    = require('chai').should();
+const app        = require('../../app');
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const should     = require('chai').should();
 require('../../backend/models/user');
-const User      = mongoose.model('User');
-const supertest = require('supertest');
-const server    = supertest.agent('http://localhost:3001');
-const jwt       = require('jsonwebtoken');
+const User       = mongoose.model('User');
+const supertest  = require('supertest');
+const server     = supertest.agent('http://localhost:3001');
+const jwt        = require('jsonwebtoken');
 
 describe('Single user endpoint', () => {
   afterEach((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
-        User.collection.remove();
+    User.remove({}, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      console.log('collection users removed');
     });
     done();
   });
@@ -119,10 +123,10 @@ describe('Single user endpoint', () => {
             res.status.should.equal(200);
             res.text.should.include('{}');
             done();
-          });
         });
       });
     });
+  });
 
   describe('requesting /api/user/:id with persisted user', () => {
     before((done) => {
@@ -167,9 +171,9 @@ describe('Single user endpoint', () => {
               res.text.should.include('"_id":"' + userId + '"');
               res.text.should.not.include('password');
               done();
-            });
           });
         });
       });
     });
+  });
 });

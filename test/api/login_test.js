@@ -1,19 +1,23 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-const app       = require('../../app');
-const mongoose  = require('mongoose');
-const should    = require('chai').should();
+const app        = require('../../app');
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const should     = require('chai').should();
 require('../../backend/models/user');
-const User      = mongoose.model('User');
-const supertest = require('supertest');
-const server    = supertest.agent('http://localhost:3001');
+const User       = mongoose.model('User');
+const supertest  = require('supertest');
+const server     = supertest.agent('http://localhost:3001');
 
 describe('Login endpoint', () => {
   afterEach((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
-        User.collection.remove();
+    User.remove({}, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      console.log('collection users removed');
     });
     done();
   });
