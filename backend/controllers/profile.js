@@ -16,9 +16,9 @@ module.exports.fetchProfile = (req, res) => {
         return;
       }
       res.status(200).json({"username": user.username,
-                            "_id": req.payload._id,
                             "nextEvent": user.nextEvent,
-                            "checkInterval": user.checkInterval });
+                            "checkInterval": user.checkInterval,
+                            "_id": req.payload._id });
     });
   }
 };
@@ -29,6 +29,10 @@ module.exports.updateProfile = (req, res) => {
     res.status(401).json({ "message" : "UnauthorizedError: private profile" });
   } else {
     User.findById(userId, function(err, userToUpdate) {
+      if(typeof(userToUpdate) === 'undefined') {
+        res.status(404).json({ "message" : "UnauthorizedError: private profile" });
+        return;
+      }
       userToUpdate.username      = req.body.username;
       userToUpdate.checkInterval = req.body.checkInterval;
       userToUpdate.setNextEvent();

@@ -1,24 +1,28 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-const app       = require('../../app');
-const mongoose  = require('mongoose');
-const should    = require('chai').should();
+const app        = require('../../app');
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const should     = require('chai').should();
 require('../../backend/models/user');
-const User      = mongoose.model('User');
-const supertest = require('supertest');
-const server    = supertest.agent('http://localhost:3001');
+const User       = mongoose.model('User');
+const supertest  = require('supertest');
+const server     = supertest.agent('http://localhost:3001');
 
 describe('Login endpoint', () => {
   afterEach((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
-        User.collection.remove();
+    User.remove({}, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      console.log('collection users removed');
     });
     done();
   });
 
-  describe('requesting /api/login with no username', () => {
+  describe('requesting POST /api/login with no username', () => {
     it('should return 400', (done) => {
       server
         .post('/api/login')
@@ -33,7 +37,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with no password', () => {
+  describe('requesting POST /api/login with no password', () => {
     it('should return 400', (done) => {
       server
         .post('/api/login')
@@ -48,7 +52,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with unknown user', () => {
+  describe('requesting POST /api/login with unknown user', () => {
     it('should return 401', (done) => {
       server
         .post('/api/login')
@@ -64,7 +68,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with wrong password', () => {
+  describe('requesting POST /api/login with wrong password', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -89,7 +93,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login correct credentials user', () => {
+  describe('requesting POST /api/login witch correct credentials', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();

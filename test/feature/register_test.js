@@ -37,7 +37,12 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'new_password')
       .click('#register_button')
       .waitForElementVisible('a#profile_link', 1000)
-      .expect.element('body').text.to.contain("new_user's profile");
+      .click('#profile_link')
+      .assert.containsText('body', 'Your profile');
+    browser
+      .getValue("#formly_2_input_username_0", function(result) {
+        this.assert.equal(result.value, 'new_user');
+    });
     browser
       .click('#logout_link')
       .assert.containsText('body', 'Hello there')
@@ -51,7 +56,12 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'new_password')
       .click('#login_button')
       .waitForElementVisible('a#profile_link', 1000)
-      .expect.element('body').text.to.contain("new_user's profile");
+      .click('#profile_link')
+      .assert.containsText('body', 'Your profile');
+    browser
+      .getValue("#formly_2_input_username_0", function(result) {
+        this.assert.equal(result.value, 'new_user');
+    });
     browser
       .end();
   }

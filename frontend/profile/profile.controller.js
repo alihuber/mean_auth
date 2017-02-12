@@ -10,9 +10,8 @@
 
   profileCtrl.$inject = ['$location', 'flash', 'profileData', 'profileForm'];
   function profileCtrl($location, flash, profileData, profileForm) {
-    var vm            = this;
-    var userId        = "";
-
+    var vm           = this;
+    var userId       = "";
     vm.updateProfile = function() {
       profileData.updateProfile(userId, vm.credentials).success(function() {
         flash.setSuccessMessage("Profile was successfully updated.");
@@ -23,8 +22,6 @@
         $location.path($location.path());
       });
     };
-
-
 
     vm.profileFields = profileForm.profileFields;
     vm.user = {};

@@ -1,17 +1,21 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-const mongoose = require('mongoose');
-const should   = require('chai').should();
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const should     = require('chai').should();
 require('../../backend/models/user');
-const User     = mongoose.model('User');
+const User       = mongoose.model('User');
 
 
 describe('User model', () => {
   after((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
-        User.collection.remove();
+    User.remove({}, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      console.log('collection users removed');
     });
     done();
   });

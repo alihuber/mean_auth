@@ -5,7 +5,7 @@ const app       = require('../../app');
 const supertest = require('supertest');
 const server    = supertest.agent('http://localhost:3001');
 
-describe('express application itself', () => {
+describe('Express application itself', () => {
   describe('404 page', () => {
     it('should return 404 on unknown URLs', (done) => {
       server

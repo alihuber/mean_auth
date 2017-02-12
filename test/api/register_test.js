@@ -1,24 +1,28 @@
 process.env.NODE_ENV = 'test';
 process.env.PORT     = '3001';
 
-const app       = require('../../app');
-const mongoose  = require('mongoose');
-const should    = require('chai').should();
+const app        = require('../../app');
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const should     = require('chai').should();
 require('../../backend/models/user');
-const User      = mongoose.model('User');
-const supertest = require('supertest');
-const server    = supertest.agent('http://localhost:3001');
+const User       = mongoose.model('User');
+const supertest  = require('supertest');
+const server     = supertest.agent('http://localhost:3001');
 
 describe('Register endpoint', () => {
   after((done) => {
     console.log('resetting test database...');
-    mongoose.connect('mongodb://127.0.0.1:28017/mean_auth', () => {
-        User.collection.remove();
+    User.remove({}, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      console.log('collection users removed');
     });
     done();
   });
 
-  describe('requesting /api/register with no username', () => {
+  describe('requesting POST /api/register with no username', () => {
     it('should return 400', (done) => {
       server
         .post('/api/register')
@@ -33,7 +37,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register with no password', () => {
+  describe('requesting POST /api/register with no password', () => {
     it('should return 400', (done) => {
       server
         .post('/api/register')
@@ -48,7 +52,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register with existing username', () => {
+  describe('requesting POST /api/register with duplicate username', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -72,7 +76,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register new user', () => {
+  describe('requesting POST /api/register with valid user data', () => {
     it('should return 200 with token', (done) => {
       server
         .post('/api/register')

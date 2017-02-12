@@ -58,7 +58,11 @@ module.exports = {
     browser
       .waitForElementVisible('a#profile_link', 1000)
       .click('#profile_link')
-      .assert.containsText('body', 'other_user');
+      .assert.containsText('body', 'Your profile');
+    browser
+      .getValue("#formly_2_input_username_0", function(result) {
+        this.assert.equal(result.value, 'other_user');
+    });
     browser
       .end();
   },
