@@ -11,8 +11,8 @@ const supertest  = require('supertest');
 const server     = supertest.agent('http://localhost:3001');
 const jwt        = require('jsonwebtoken');
 
-describe('Single user endpoint', () => {
-  afterEach((done) => {
+describe('Create user endpoint', () => {
+  after((done) => {
     console.log('resetting test database...');
     User.remove({}, function(err) {
       if(err) {
@@ -23,10 +23,10 @@ describe('Single user endpoint', () => {
     done();
   });
 
-  describe('requesting GET /api/user/:id with no auth header', () => {
+  describe('requesting POST /api/user with no auth header', () => {
     it('should return 401', (done) => {
       server
-        .get('/api/user/123')
+        .post('/api/user')
         .expect('Content-type',/json/)
         .expect(401)
         .end((err, res) => {
@@ -37,18 +37,19 @@ describe('Single user endpoint', () => {
     });
   });
 
-  describe('requesting GET /api/user/id with no id in header', () => {
+  describe('requesting POST /api/user with no id in header', () => {
     it('should return 401', (done) => {
-      let token        = '';
-      let expiry       = new Date();
+      let token  = '';
+      let expiry = new Date();
       expiry.setDate(expiry.getDate() + 7);
       token      = jwt.sign({
         username: 'admin',
         exp: parseInt(expiry.getTime() / 1000),
       }, 'MY_SECRET');
       server
-        .get('/api/user/12345')
+        .post('/api/user')
         .set('Authorization', 'Bearer ' + token)
+        .send( {'username': 'new_user', 'password': 'new_password'} )
         .expect('Content-type',/json/)
         .expect(401)
         .end((err, res) => {
@@ -59,19 +60,20 @@ describe('Single user endpoint', () => {
     });
   });
 
-  describe('requesting GET /api/user/id with not existent id in header', () => {
+  describe('requesting POST /api/user with not existent id in header', () => {
     it('should return 404', (done) => {
       let token  = '';
       let expiry = new Date();
       expiry.setDate(expiry.getDate() + 7);
       token      = jwt.sign({
         username: 'admin',
-        _id: '1234',
+        _id: '12345',
         exp: parseInt(expiry.getTime() / 1000),
       }, 'MY_SECRET');
       server
-        .get('/api/user/some_id')
+        .post('/api/user')
         .set('Authorization', 'Bearer ' + token)
+        .send( {'username': 'new_user', 'password': 'new_password'} )
         .expect('Content-type',/json/)
         .expect(404)
         .end((err, res) => {
@@ -81,7 +83,30 @@ describe('Single user endpoint', () => {
     });
   });
 
-  describe('requesting GET /api/user/:id with unauthorized user', () => {
+  describe('requesting POST /api/user with no data', () => {
+    it('should return 400', (done) => {
+      let token  = '';
+      let expiry = new Date();
+      expiry.setDate(expiry.getDate() + 7);
+      token      = jwt.sign({
+        username: 'admin',
+        _id: '1234',
+        exp: parseInt(expiry.getTime() / 1000),
+      }, 'MY_SECRET');
+      server
+        .post('/api/user')
+        .set('Authorization', 'Bearer ' + token)
+        .expect('Content-type',/json/)
+        .expect(400)
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.text.should.include('All fields required');
+          done();
+      });
+    });
+  });
+
+  describe('requesting POST /api/user with unauthorized user', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -92,32 +117,31 @@ describe('Single user endpoint', () => {
     });
 
     it('should return 401', (done) => {
-      let token    = '';
-      let userId   = '';
+      let token  = '';
+      let expiry = new Date();
       User.find({username: 'registered'}).then((users, err) => {
-        userId     = users[0]._id;
-        let expiry = new Date();
         expiry.setDate(expiry.getDate() + 7);
         token      = jwt.sign({
-          _id: users[0]._id,
           username: 'registered',
+          _id: users[0]._id,
           exp: parseInt(expiry.getTime() / 1000),
         }, 'MY_SECRET');
         server
-          .get('/api/user/123')
+          .post('/api/user')
           .set('Authorization', 'Bearer ' + token)
+          .send( {'username': 'new_user', 'password': 'new_password'} )
           .expect('Content-type',/json/)
           .expect(401)
           .end((err, res) => {
             res.status.should.equal(401);
             res.text.should.include('UnauthorizedError');
             done();
-          });
         });
       });
     });
+  });
 
-  describe('requesting GET /api/user/:id with authorized user', () => {
+  describe('requesting POST /api/user with duplicate user data', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -128,76 +152,53 @@ describe('Single user endpoint', () => {
       done();
     });
 
-    it('should return 200', (done) => {
-      let token    = '';
-      let userId   = '';
+    it('should return 500', (done) => {
+      let token  = '';
+      let expiry = new Date();
       User.find({username: 'admin'}).then((users, err) => {
-        userId     = users[0]._id;
-        let expiry = new Date();
         expiry.setDate(expiry.getDate() + 7);
         token      = jwt.sign({
+          username: 'registered',
           _id: users[0]._id,
-          username: 'admin',
           exp: parseInt(expiry.getTime() / 1000),
         }, 'MY_SECRET');
         server
-          .get('/api/user/123')
+          .post('/api/user')
           .set('Authorization', 'Bearer ' + token)
+          .send( {'username': 'registered', 'password': 'new_password'} )
           .expect('Content-type',/json/)
-          .expect(200)
+          .expect(500)
           .end((err, res) => {
-            res.status.should.equal(200);
-            res.text.should.include('{}');
+            res.status.should.equal(500);
+            res.text.should.include('"message":' +
+                '"Please choose a different user name"');
             done();
         });
       });
     });
   });
 
-  describe('requesting GET /api/user/:id with valid user data', () => {
-    before((done) => {
-      console.log('populating test database...');
-      let user1      = new User();
-      user1.username = 'admin';
-      user1.setPassword('admin');
-      user1.isAdmin  = true;
-      user1.save();
-      let user2      = new User();
-      user2.username = 'some.user';
-      user2.setPassword('some.password');
-      user2.isAdmin  = false;
-      user2.save();
-      done();
-    });
-
-    it('should return 200 and user data', (done) => {
-      let token       = '';
-      let adminUserId = '';
-      let userId      = '';
-      User.find({username: 'some.user'}).then((users, err) => {
-        userId = users[0]._id;
-        User.find({username: 'admin'}).then((users, err) => {
-          adminUserId = users[0]._id;
-          let expiry  = new Date();
-          expiry.setDate(expiry.getDate() + 7);
-          token = jwt.sign({
-            _id: users[0]._id,
-            username: 'admin',
-            exp: parseInt(expiry.getTime() / 1000),
-          }, 'MY_SECRET');
-          server
-            .get('/api/user/' + userId)
-            .set('Authorization', 'Bearer ' + token)
-            .expect('Content-type',/json/)
-            .expect(200)
-            .end((err, res) => {
-              res.status.should.equal(200);
-              res.text.should.include('"username":"some.user"');
-              res.text.should.include('"isAdmin":false');
-              res.text.should.include('"_id":"' + userId + '"');
-              res.text.should.not.include('password');
-              done();
-          });
+  describe('requesting POST /api/user with valid user data', () => {
+    it('should return 201 with success message', (done) => {
+      let token  = '';
+      let expiry = new Date();
+      User.find({username: 'admin'}).then((users, err) => {
+        expiry.setDate(expiry.getDate() + 7);
+        token      = jwt.sign({
+          username: 'registered',
+          _id: users[0]._id,
+          exp: parseInt(expiry.getTime() / 1000),
+        }, 'MY_SECRET');
+        server
+          .post('/api/user')
+          .set('Authorization', 'Bearer ' + token)
+          .send( {'username': 'new_user', 'password': 'new_password'} )
+          .expect('Content-type',/json/)
+          .expect(201)
+          .end((err, res) => {
+            res.status.should.equal(201);
+            res.text.should.include('"message":"success"');
+            done();
         });
       });
     });

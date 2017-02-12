@@ -22,7 +22,7 @@ describe('Login endpoint', () => {
     done();
   });
 
-  describe('requesting /api/login with no username', () => {
+  describe('requesting POST /api/login with no username', () => {
     it('should return 400', (done) => {
       server
         .post('/api/login')
@@ -37,7 +37,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with no password', () => {
+  describe('requesting POST /api/login with no password', () => {
     it('should return 400', (done) => {
       server
         .post('/api/login')
@@ -52,7 +52,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with unknown user', () => {
+  describe('requesting POST /api/login with unknown user', () => {
     it('should return 401', (done) => {
       server
         .post('/api/login')
@@ -68,7 +68,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login with wrong password', () => {
+  describe('requesting POST /api/login with wrong password', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -93,7 +93,7 @@ describe('Login endpoint', () => {
     });
   });
 
-  describe('requesting /api/login correct credentials user', () => {
+  describe('requesting POST /api/login witch correct credentials', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();

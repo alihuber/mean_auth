@@ -22,7 +22,7 @@ describe('Register endpoint', () => {
     done();
   });
 
-  describe('requesting /api/register with no username', () => {
+  describe('requesting POST /api/register with no username', () => {
     it('should return 400', (done) => {
       server
         .post('/api/register')
@@ -37,7 +37,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register with no password', () => {
+  describe('requesting POST /api/register with no password', () => {
     it('should return 400', (done) => {
       server
         .post('/api/register')
@@ -52,7 +52,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register with existing username', () => {
+  describe('requesting POST /api/register with duplicate username', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -76,7 +76,7 @@ describe('Register endpoint', () => {
     });
   });
 
-  describe('requesting /api/register new user', () => {
+  describe('requesting POST /api/register with valid user data', () => {
     it('should return 200 with token', (done) => {
       server
         .post('/api/register')

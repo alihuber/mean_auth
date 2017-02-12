@@ -27,6 +27,10 @@ module.exports.updateProfile = (req, res) => {
     res.status(401).json({ "message" : "UnauthorizedError: private profile" });
   } else {
     User.findById(userId, function(err, userToUpdate) {
+      if(typeof(userToUpdate) === 'undefined') {
+        res.status(404).json({ "message" : "UnauthorizedError: private profile" });
+        return;
+      }
       userToUpdate.username = req.body.username;
       userToUpdate.save(function(err, user) {
         if(err) {
