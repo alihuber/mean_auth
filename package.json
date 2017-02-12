@@ -20,7 +20,8 @@
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
     "pug": "2.0.0-beta11",
-    "serve-favicon": "~2.3.2"
+    "serve-favicon": "~2.3.2",
+    "later": "~1.2.0"
   },
   "devDependencies": {
     "mocha": "~3.2.0",

@@ -109,7 +109,7 @@ describe('Update profile endpoint', () => {
         server
           .put('/api/profile')
           .set('Authorization', 'Bearer ' + token)
-          .send( {'username': 'duplicate'} )
+          .send( {'username': 'duplicate', 'checkInterval': 'every 1 h'} )
           .expect('Content-type',/json/)
           .expect(500)
           .end((err, res) => {
@@ -136,7 +136,7 @@ describe('Update profile endpoint', () => {
         server
           .put('/api/profile')
           .set('Authorization', 'Bearer ' + token)
-          .send( {'username': 'new_name'} )
+          .send( {'username': 'new_name', 'checkInterval': 'every 1 m'} )
           .expect('Content-type',/json/)
           .expect(200)
           .end((err, res) => {
