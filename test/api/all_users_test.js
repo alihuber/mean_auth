@@ -118,7 +118,7 @@ describe('All users endpoint', () => {
     });
   });
 
-  describe('requesting GET /api/users with valid data', () => {
+  describe('requesting GET /api/users with expired token', () => {
     before((done) => {
       console.log('populating test database...');
       let user      = new User();
@@ -129,6 +129,33 @@ describe('All users endpoint', () => {
       done();
     });
 
+    it('should return 401', (done) => {
+      let token  = '';
+      let userId = '';
+      User.find({username: 'admin'}).then((users, err) => {
+        userId     = users[0]._id;
+        let expiry = new Date();
+        expiry.setDate(expiry.getDate() - 7);
+        token      = jwt.sign({
+          _id: users[0]._id,
+          username: 'admin',
+          exp: parseInt(expiry.getTime() / 1000),
+        }, 'MY_SECRET');
+        server
+          .get('/api/users')
+          .set('Authorization', 'Bearer ' + token)
+          .expect('Content-type',/json/)
+          .expect(401)
+          .end((err, res) => {
+            res.status.should.equal(401);
+            res.text.should.include('UnauthorizedError: jwt expired');
+            done();
+        });
+      });
+    });
+  });
+
+  describe('requesting GET /api/users with valid data', () => {
     it('should return 200', (done) => {
       let token  = '';
       let userId = '';
