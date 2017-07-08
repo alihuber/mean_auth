@@ -2,8 +2,12 @@
   .sidebar-wrapper
     .logo
       a.simple-text(href='/') RSS Reader
-    ul.nav
+    ul.nav(ng-if='vm.isLoggedIn')
       li.active
-        a(href='#') Dashboard
+        a(href='#') Today
       li
-        a(href='#') Profile
+        a(href='#') Unread
+      li
+        p
+          b
+            | Folders
