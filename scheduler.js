@@ -12,7 +12,7 @@ let formatDate = (date) => {
     ("0" + date.getUTCSeconds()).slice(-2);
 };
 
-module.exports.fetchEvents= () => {
+module.exports.fetchEvents = () => {
   let sched  = later.parse.recur().every(1).minute();
   let triggerDueEvents = () => {
     console.log('checking events...');

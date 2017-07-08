@@ -1,0 +1,166 @@
+/********/
+/* main */
+/********/
+.margin-top {
+  margin-top: 50px;
+}
+
+.wrapper {
+  position: relative;
+  top: 0;
+  height: 100vh;
+}
+
+.main-panel {
+  background: rgba(203, 203, 210, 0.15);
+  position: relative;
+  z-index: 2;
+  float: right;
+  width: calc(100% - 260px);
+  min-height: 100%;
+}
+
+.main-panel > .content {
+  padding: 30px 15px;
+  min-height: calc(100% - 123px);
+}
+
+.main-panel > .footer {
+  border-top: 1px solid #e7e7e7;
+}
+
+.main-panel .navbar {
+  margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+  .main-panel {
+    width: 100%;
+  }
+
+  body {
+    position: relative;
+  }
+
+  .wrapper {
+    -webkit-transform: translate3d(0px, 0, 0);
+    -moz-transform: translate3d(0px, 0, 0);
+    -o-transform: translate3d(0px, 0, 0);
+    -ms-transform: translate3d(0px, 0, 0);
+    transform: translate3d(0px, 0, 0);
+    -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    -ms-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    left: 0;
+    background-color: white;
+  }
+}
+
+
+
+/**************/
+/* navigation */
+/**************/
+.main-panel .navbar {
+  margin-bottom: 0;
+}
+
+/* bootstrap overrides for navbar */
+.navbar {
+  border-radius: 0px !important;
+  border-left: 0px !important;
+  border-bottom: 1px solid #e2e2e2 !important;
+}
+
+.navbar-default {
+  background-color: #fff !important;
+}
+
+/***********/
+/* sidebar */
+/***********/
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 260px;
+  display: block;
+  z-index: 1;
+  color: #fff;
+  font-weight: 200;
+  background-size: cover;
+  background-position: center center;
+}
+
+.sidebar .sidebar-wrapper {
+  position: relative;
+  max-height: none;
+  min-height: 100%;
+  overflow: hidden;
+  width: 260px;
+  z-index: 4;
+}
+
+.sidebar .logo {
+  padding: 6px 15px 5px 15px;
+  border-bottom: 1px solid #e2e2e2;
+}
+.sidebar .logo p {
+  float: left;
+  font-size: 20px;
+  margin: 10px 10px;
+  line-height: 20px;
+}
+.sidebar .logo .simple-text {
+  text-transform: uppercase;
+  padding: 5px 0px;
+  display: block;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 400;
+  line-height: 30px;
+  text-decoration: none !important;
+}
+
+.sidebar .nav {
+  margin-top: 20px;
+}
+.sidebar .nav li > a {
+  margin: 5px 15px;
+  opacity: .86;
+  border-radius: 4px;
+}
+.sidebar .nav li:hover > a {
+  background: rgba(126, 41, 41, 0.13);
+  opacity: 1;
+}
+.sidebar .nav li.active > a {
+  background: rgba(126, 41, 41, 0.20);
+  opacity: 1;
+}
+
+.sidebar .nav p {
+  margin: 0;
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sidebar .nav i {
+  font-size: 28px;
+  float: left;
+  margin-right: 15px;
+  line-height: 30px;
+  width: 30px;
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}

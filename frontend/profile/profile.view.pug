@@ -1,16 +1,22 @@
-navigation
-.container
-  .row
-    .col-md-6
-      h1.form-signin-heading Your profile
-      .alert.alert-danger(id='alert_div', role='alert',
-        ng-if='vm.message') {{vm.message}}
-      form(id='profile_form')
-        formly-form(model='vm.credentials',
-          fields='vm.profileFields' form='vm.profileForm')
-          .row
-            .col-md-6.text-left
-              button.btn.btn-primary(id='profile_save_button' type='submit'
-              ng-click='vm.updateProfile()') Save
-      br
-      b Next event: {{ vm.user.nextEvent | date: "dd.MM.yyyy ', 'HH:mm" }}
+.wrapper
+  // sidebar directive
+  sidebar
+  .main-panel
+    // navigation directive
+    navigation
+    .content
+      .container
+        .row
+          .col-md-6
+            h1.form-signin-heading Your profile
+            .alert.alert-danger(id='alert_div', role='alert',
+              ng-if='vm.message') {{vm.message}}
+            form(id='profile_form')
+              formly-form(model='vm.credentials',
+                fields='vm.profileFields' form='vm.profileForm')
+                .row
+                  .col-md-6.text-left
+                    button.btn.btn-primary(id='profile_save_button' type='submit'
+                    ng-click='vm.updateProfile()') Save
+            br
+            b Next event: {{ vm.user.nextEvent | date: "dd.MM.yyyy', 'HH:mm" }}

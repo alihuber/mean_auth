@@ -1,15 +1,21 @@
-navigation
-.container
-  .row
-    .col-md-6
-      h1 Register
-      p.lead
-        | Already a member? Please 
-        a(href='login') log in 
-        |  instead.
-      .alert.alert-danger(id='alert_div', role='alert',
-        ng-if='vm.message') {{vm.message}}
-      form(ng-submit='vm.onSubmit()')
-        formly-form(model='vm.credentials',
-          fields='vm.credentialsFields' form='vm.credentialsForm')
-          button.btn.btn-default(type='submit' id='register_button') Register!
+.wrapper
+  // sidebar directive
+  sidebar
+  .main-panel
+    // navigation directive
+    navigation
+    .content
+      .container
+        .row
+          .col-md-6
+            h1 Register
+            p.lead
+              | Already a member? Please 
+              a(href='login') log in 
+              |  instead.
+            .alert.alert-danger(id='alert_div', role='alert',
+              ng-if='vm.message') {{vm.message}}
+            form(ng-submit='vm.onSubmit()')
+              formly-form(model='vm.credentials',
+                fields='vm.credentialsFields' form='vm.credentialsForm')
+                button.btn.btn-default(type='submit' id='register_button') Register!

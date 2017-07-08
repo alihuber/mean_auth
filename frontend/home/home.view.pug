@@ -1,26 +1,31 @@
-// navigation directive inserted here
-navigation
+.wrapper
+  // sidebar directive
+  sidebar
+  .main-panel
+    // navigation directive
+    navigation
+    .content
+      .container(ng-if='!vm.isLoggedIn')
+        h1 Hello there
+        p
+          | Won't you please 
+          a(href='login' id='login_link') sign in
+          |  or 
+          a(href='register' id='register_link') register
+          | ?
 
-.container(ng-if='!vm.isLoggedIn')
-  h1 Hello there
-  p
-    | Won't you please 
-    a(href='login' id='login_link') sign in
-    |  or 
-    a(href='register' id='register_link') register
-    | ?
-
-.container(ng-if='vm.isLoggedIn && !vm.isAdmin')
-  h1 User dashboard
-  .alert.alert-danger(id='alert_div', role='alert',
-    ng-if='vm.errorMessage') {{vm.errorMessage}}
-  .alert.alert-success(id='alert_div', role='alert',
-    ng-if='vm.successMessage') {{vm.successMessage}}
+      .container(ng-if='vm.isLoggedIn && !vm.isAdmin')
+        h1 User dashboard
+        .alert.alert-danger(id='alert_div', role='alert',
+          ng-if='vm.errorMessage') {{vm.errorMessage}}
+        .alert.alert-success(id='alert_div', role='alert',
+          ng-if='vm.successMessage') {{vm.successMessage}}
 
 
-.container(ng-if='vm.isLoggedIn && vm.isAdmin')
-  .row
-    .col-md-8
-      h1 Admin dashboard
-      h2 Users
-      users_table
+      .container(ng-if='vm.isLoggedIn && vm.isAdmin')
+        .row
+          .col-md-8
+            h1 Admin dashboard
+            h2 Users
+            users_table
+
