@@ -9,4 +9,8 @@
         .row
           .col-md-8
             h1.form-signin-heading Listing users
+            .alert.alert-danger(id='alert_div', role='alert',
+              ng-if='vm.errorMessage') {{vm.errorMessage}}
+            .alert.alert-success(id='alert_div', role='alert',
+              ng-if='vm.successMessage') {{vm.successMessage}}
             users_table

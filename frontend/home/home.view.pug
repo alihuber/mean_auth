@@ -27,5 +27,9 @@
           .col-md-8
             h1 Admin dashboard
             h2 Users
+            .alert.alert-danger(id='alert_div', role='alert',
+              ng-if='vm.errorMessage') {{vm.errorMessage}}
+            .alert.alert-success(id='alert_div', role='alert',
+              ng-if='vm.successMessage') {{vm.successMessage}}
             users_table
 
