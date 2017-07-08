@@ -19,10 +19,18 @@
           a(href='admin')
             span.glyphicon.glyphicon-wrench(aria-hidden='true')
             | &nbsp; Admin
-        li(ng-if='vm.isLoggedIn')
-          a(href='profile' id='profile_link')
-            span.glyphicon.glyphicon-user(aria-hidden='true')
+        li.dropdown(ng-if='vm.isLoggedIn')
+          a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            span.glyphicon.glyphicon-cog(aria-hidden='true')
             | &nbsp; Settings
+            span.caret
+          ul.dropdown-menu
+           li
+             a(href='profile' id='profile_link') Profile
+           li
+             a(href='subscriptions' id='subscriptions_link') Subscriptions
+           li
+             a(href='folders' id='folders_link') Folders
         li(ng-if='vm.isLoggedIn')
           a(href='logout' id='logout_link')
             span.glyphicon.glyphicon-log-out(aria-hidden='true')
