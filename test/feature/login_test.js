@@ -36,7 +36,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
       .expect.element('body').text.to.contain('User dashboard');
     browser
       .click('#logout_link')
@@ -55,7 +55,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
       .expect.element('body').text.to.contain('Admin dashboard');
     browser
       .click('#logout_link')

@@ -6,21 +6,23 @@ const ObjectId = Schema.ObjectId;
 const later    = require('later');
 
 const userSchema = new Schema({
-  id: ObjectId,
-  username: {
-    type: String,
-    minlength: 2,
-    unique: true,
-    required: true
+    id: ObjectId,
+    username: {
+      type: String,
+      minlength: 2,
+      unique: true,
+      required: true
+    },
+    password: {
+      type: String,
+      minlength: 8,
+      required: true
+    },
+    checkInterval: { type: String, default: "every 1 h" },
+    nextEvent: { type: Date },
+    isAdmin: { type: Boolean, default: false },
+    folders: [String],
   },
-  password: {
-    type: String,
-    minlength: 8,
-    required: true
-  },
-  checkInterval: { type: String, default: "every 1 h" },
-  nextEvent: { type: Date },
-  isAdmin: { type: Boolean, default: false } },
   { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
 );
 

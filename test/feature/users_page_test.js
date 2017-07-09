@@ -16,7 +16,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'registered')
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('#home_link')
       .expect.element('body').text.to.not.contain('Users');
@@ -33,7 +33,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('#home_link')
       .expect.element('body').text.to.contain('Users');

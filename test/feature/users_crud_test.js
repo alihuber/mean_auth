@@ -8,7 +8,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('#user_create_button')
       .waitForElementVisible('newheader', 1000);
@@ -29,7 +29,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('#user_create_button')
       .waitForElementVisible('newheader', 1000);
@@ -56,7 +56,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'new_password')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -74,7 +75,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('#user_create_button')
       .waitForElementVisible('newheader', 1000);
@@ -94,7 +95,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser
       .click('table.table a')
       .waitForElementVisible('defaultheader', 1000);
@@ -115,7 +116,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000);
+      .waitForElementVisible('li#settings_link', 1000);
     browser.elements('class name', 'glyphicon-check', (res) => {
       res.value.length.should.equal(1);
     });
@@ -144,7 +145,7 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'admin')
       .setValue('#formly_1_input_password_1', 'admin')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
       .assert.containsText('table.table', 'other_user');
     browser
       .click('table.table a')

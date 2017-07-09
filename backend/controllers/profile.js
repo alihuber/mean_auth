@@ -18,6 +18,7 @@ module.exports.fetchProfile = (req, res) => {
       res.status(200).json({"username": user.username,
                             "nextEvent": user.nextEvent,
                             "checkInterval": user.checkInterval,
+                            "folders": user.folders,
                             "_id": req.payload._id });
     });
   }
@@ -36,6 +37,7 @@ module.exports.updateProfile = (req, res) => {
       userToUpdate.username      = req.body.username;
       userToUpdate.checkInterval = req.body.checkInterval;
       userToUpdate.setNextEvent();
+      userToUpdate.folders       = req.body.folders;
       userToUpdate.save(function(err, user) {
         if(err) {
           // unique entry violation

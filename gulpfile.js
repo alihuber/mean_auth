@@ -10,7 +10,9 @@ gulp.task('scripts', () => {
   gulp.src(['./frontend/**/*.js', '!./frontend/**/*.test.js','!./frontend/app.min.js'])
     .pipe(sourcemaps.init())
       .pipe(concat('./app.min.js'))
-      .pipe(uglify({mangle: true}))
+      .pipe(uglify({mangle: true}).on('error', function(e) {
+        console.log(e);
+      }))
       .pipe(gulp.dest('frontend'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('frontend'));

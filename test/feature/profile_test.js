@@ -17,7 +17,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser.getValue("#formly_2_input_username_0", function(result) {
@@ -37,7 +38,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -48,6 +50,7 @@ module.exports = {
     browser
       .assert.containsText('div#alert_div', 'successful');
     browser
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser.getValue("#formly_2_input_username_0", function(result) {
@@ -67,7 +70,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -91,7 +95,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -114,7 +119,8 @@ module.exports = {
       .setValue('#formly_1_input_password_1', 'registered')
       .click('#login_button');
     browser
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -125,6 +131,7 @@ module.exports = {
     browser
       .assert.containsText('div#alert_div', 'successful');
     browser
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser.getValue("#formly_2_input_username_0", function(result) {
@@ -132,5 +139,5 @@ module.exports = {
     });
     browser
       .end();
-  },
+  }
 };

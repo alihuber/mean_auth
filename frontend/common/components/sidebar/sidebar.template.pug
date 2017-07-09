@@ -11,3 +11,6 @@
         p
           b
             | Folders
+    ul(ng-if='vm.isLoggedIn' ng-repeat='folder in vm.folders')
+      li
+        a(href='#') {{folder}}

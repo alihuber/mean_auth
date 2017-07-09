@@ -36,7 +36,8 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')
       .click('#register_button')
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser
@@ -55,7 +56,8 @@ module.exports = {
       .setValue('#formly_1_input_username_0', 'new_user')
       .setValue('#formly_1_input_password_1', 'new_password')
       .click('#login_button')
-      .waitForElementVisible('a#profile_link', 1000)
+      .waitForElementVisible('li#settings_link', 1000)
+      .click('#settings_link')
       .click('#profile_link')
       .assert.containsText('body', 'Your profile');
     browser

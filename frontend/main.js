@@ -23,6 +23,11 @@
         controller: 'profileCtrl',
         controllerAs: 'vm'
       })
+      .when('/folders', {
+        templateUrl: 'folders/folders.view.html',
+        controller: 'foldersCtrl',
+        controllerAs: 'vm'
+      })
       .when('/users', {
         templateUrl: 'users/users.view.html'
       })
@@ -51,6 +56,9 @@
     $rootScope.$on('$routeChangeStart',
       function() {
         if($location.path() === '/profile' && !authentication.isLoggedIn()) {
+          $location.path('/');
+        }
+        if($location.path() === '/folders' && !authentication.isLoggedIn()) {
           $location.path('/');
         }
         if($location.path() === '/users' && !authentication.isLoggedIn()) {

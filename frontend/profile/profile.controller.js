@@ -1,7 +1,7 @@
 (function() {
 
   function AuthenticationException(message) {
-    this.message = "Error loading profile: " + message;
+    this.message = 'Error loading profile: ' + message;
   }
 
   angular
@@ -10,11 +10,12 @@
 
   profileCtrl.$inject = ['$location', 'flash', 'profileData', 'profileForm'];
   function profileCtrl($location, flash, profileData, profileForm) {
-    var vm           = this;
-    var userId       = "";
+    var vm     = this;
+    var userId = '';
+
     vm.updateProfile = function() {
-      profileData.updateProfile(userId, vm.credentials).success(function() {
-        flash.setSuccessMessage("Profile was successfully updated.");
+      profileData.updateProfile(userId, vm.dataToUpdate).success(function() {
+        flash.setSuccessMessage('Profile was successfully updated.');
         $location.path('home');
       })
       .error(function(err) {
@@ -30,9 +31,12 @@
       .success(function(data) {
         userId  = data._id;
         vm.user = data;
-        vm.credentials = {
+        // data to update.
+        // profile backend expects username, checkInterval, folders
+        vm.dataToUpdate = {
           username : vm.user.username,
-          checkInterval : vm.user.checkInterval
+          checkInterval : vm.user.checkInterval,
+          folders : vm.user.folders
         };
       })
       .error(function(e) {

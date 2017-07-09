@@ -1,5 +1,9 @@
 (function() {
 
+  function AuthenticationException(message) {
+    this.message = "Error loading user: " + message;
+  }
+
   angular
     .module('frontend')
     .component('sidebar', {
@@ -8,14 +12,22 @@
       controllerAs: 'vm'
     });
 
-  sidebarCtrl.$inject = ['authentication'];
-  function sidebarCtrl(authentication) {
+  sidebarCtrl.$inject = ['authentication', 'profileData'];
+  function sidebarCtrl(authentication, profileData) {
     var vm = this;
     vm.isLoggedIn  = authentication.isLoggedIn();
-    vm.currentUser = authentication.currentUser();
-    if(typeof vm.currentUser !== 'undefined') {
-      vm.isAdmin   = vm.currentUser.isAdmin;
-    }
+
+
+    profileData.getProfile()
+      .success(function(data) {
+        userId  = data._id;
+        vm.user = data;
+        vm.folders = data.folders;
+      })
+      .error(function(e) {
+        throw new AuthenticationException(e);
+      });
+
   }
 
 })();

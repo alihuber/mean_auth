@@ -12,7 +12,7 @@
             .alert.alert-danger(id='alert_div', role='alert',
               ng-if='vm.message') {{vm.message}}
             form(id='profile_form')
-              formly-form(model='vm.credentials',
+              formly-form(model='vm.dataToUpdate',
                 fields='vm.profileFields' form='vm.profileForm')
                 .row
                   .col-md-6.text-left
