@@ -1,10 +1,22 @@
-const mongoose = require('mongoose');
-const bcrypt   = require('bcryptjs');
-const jwt      = require('jsonwebtoken');
-const Schema   = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
-const later    = require('later');
+const mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+const bcrypt     = require('bcryptjs');
+const jwt        = require('jsonwebtoken');
+const Schema     = mongoose.Schema;
+const ObjectId   = Schema.ObjectId;
+const later      = require('later');
 
+
+/*
+possible intervals:
+every 5 minutes
+every 10 minutes
+every 30 minutes
+every 1 h
+every 2 hours
+every 3 hours
+every 6 hours
+*/
 const userSchema = new Schema({
     id: ObjectId,
     username: {

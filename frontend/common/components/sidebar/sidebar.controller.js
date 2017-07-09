@@ -18,16 +18,17 @@
     vm.isLoggedIn  = authentication.isLoggedIn();
 
 
-    profileData.getProfile()
-      .success(function(data) {
-        userId  = data._id;
-        vm.user = data;
-        vm.folders = data.folders;
-      })
-      .error(function(e) {
-        throw new AuthenticationException(e);
-      });
-
+    if(vm.isLoggedIn) {
+      profileData.getProfile()
+        .success(function(data) {
+          userId  = data._id;
+          vm.user = data;
+          vm.folders = data.folders;
+        })
+        .error(function(e) {
+          throw new AuthenticationException(e);
+        });
+    }
   }
 
 })();

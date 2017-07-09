@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const mongoose     = require('mongoose');
 const passport     = require('passport');
+const later        = require('later');
 const scheduler    = require('./scheduler.js');
 
 // use ES6 promises
@@ -102,6 +103,8 @@ http.createServer(app).listen(app.get('port'), () => {
   console.log('Epress Server listening on port ' + app.get('port'));
 });
 
-scheduler.fetchEvents();
+console.log('Starting due event scheduler...');
+const sched = later.parse.recur().every(1).minute();
+later.setInterval(scheduler.triggerDueEvents, sched);
 
 module.exports = app;
