@@ -8,7 +8,7 @@ html(ng-app='frontend')
     link(rel='stylesheet', href='stylesheets/styles.css')
   // ng-view: placeholder for views, views given with templateURL
   // given in router will be rendered here
-  body(ng-view='')
+  body(ng-view='', ng-cloak)
     script(src='lib/angular.min.js')
     script(src='lib/angular-route.min.js')
     script(src='lib/api-check.min.js')

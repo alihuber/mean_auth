@@ -13,21 +13,26 @@
     var vm       = this;
     var userId   = '';
     vm.newFolder = '';
-    vm.submitted = false;
 
     /**
      * vm functions
      */
     vm.updateProfile = function($event) {
       $event.preventDefault();
-      profileData.updateProfile(userId, vm.dataToUpdate).success(function() {
-        flash.setSuccessMessage('Profile was successfully updated.');
-        $location.path('home');
-      })
-      .error(function(err) {
-        vm.message = err.message;
+      if(hasDuplicateFolders()) {
+        vm.message = 'Your setup contains duplicate folders.';
         $location.path($location.path());
-      });
+        return;
+      } else {
+        profileData.updateProfile(userId, vm.dataToUpdate).success(function() {
+          flash.setSuccessMessage('Profile was successfully updated.');
+          $location.path('home');
+        })
+        .error(function(err) {
+          vm.message = err.message;
+          $location.path($location.path());
+        });
+      }
     };
 
     vm.removeFolder = function(folder) {
@@ -37,22 +42,10 @@
       }
     };
 
-    vm.updateFolder = function() {
-      if(hasDuplicateFolders()) {
-        vm.message = 'Folder name already taken.';
-        $location.path($location.path());
-        return;
-      } else {
-        flash.cleanMessages();
-        vm.message = undefined;
-      }
-    };
-
     vm.addFolder = function($event) {
       if(isDuplicateFolder(vm.newFolder)) {
         vm.message = 'Folder name already taken.';
         $location.path($location.path());
-        vm.submitted = false;
         return;
       }
       $event.preventDefault();
@@ -60,7 +53,6 @@
       vm.newFolder = '';
       vm.folderForm.$setPristine();
       vm.folderForm.$setUntouched();
-      vm.submitted = false;
       flash.cleanMessages();
       vm.message = undefined;
     };
@@ -74,11 +66,13 @@
         vm.user = data;
         vm.folders = data.folders;
         // data to update.
-        // profile backend expects username, checkInterval, folders
+        // profile backend expects username,
+        // checkInterval, folders, subscriptions
         vm.dataToUpdate = { 
           username : vm.user.username,
           checkInterval : vm.user.checkInterval,
-          folders : vm.folders
+          folders : vm.folders,
+          subscriptions : vm.user.subscriptions
         };
       })
       .error(function(e) {

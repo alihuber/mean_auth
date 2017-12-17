@@ -15,18 +15,16 @@
               thead
                 tr
                   th Folder
-                  th(colspan='2') Actions
+                  th
               tbody
                 tr(ng-repeat='folder in vm.folders track by $index')
                   td
                     input.form-control(id='folder_{{$index}}',
-                    ng-model='vm.folders[$index]', ng-value='vm.folders[$index]')
+                    ng-model='vm.folders[$index]',
+                    ng-value='vm.folders[$index]')
                   td
-                    button.btn.btn-primary.btn-sm(id='edit_folder_button_{{$index}}',
-                    ng-click='vm.updateFolder()',
-                    ng-disabled='folder.length === 0') Update
-                  td
-                    button.btn.btn-danger.btn-sm(id='remove_folder_button_{{$index}}',
+                    button.btn.btn-danger.btn-sm(id='remove_folder_' +
+                    'button_{{$index}}',
                     ng-click='vm.removeFolder(folder)') Remove
             h1.form-signin-heading Add folder
             form(ng-class="{'submitted': vm.submitted}", name='vm.folderForm')
@@ -38,7 +36,8 @@
                 .col-md-6.text-left
                   button.btn.btn-default(id='add_folder_button',
                   ng-click='vm.addFolder($event)',
-                  ng-disabled='vm.newFolder.length === 0 || vm.newFolder === undefined') Add
+                  ng-disabled='vm.newFolder.length === 0 || ' +
+                  'vm.newFolder === undefined') Add
                 .col-md-6.text-right
                   button.btn.btn-primary.align-right(id='save_folder_button'
-                  ng-click='vm.updateProfile($event)') Save
+                  ng-click='vm.updateProfile($event)') Save settings

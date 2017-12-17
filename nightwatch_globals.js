@@ -23,8 +23,8 @@ module.exports = {
   before: function(done) {
     require('./app');
     console.log('populating test database...');
-    var user1      = new User();
-    user1.username = 'registered';
+    var user1          = new User();
+    user1.username     = 'registered';
     user1.setPassword('registered');
     user1.save();
     var adminUser      = new User();

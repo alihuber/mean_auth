@@ -1,5 +1,10 @@
+var mongoose     = require('mongoose');
+mongoose.Promise = global.Promise;
+require('../../backend/models/user');
+var User         = mongoose.model('User');
+
 module.exports = {
-  'Accessing foldes page, not logged in' : (browser) => {
+  'Accessing folders page, not logged in' : (browser) => {
     browser
       .url('http://localhost:3001/folders')
       .waitForElementVisible('navigation', 1000)
@@ -8,21 +13,28 @@ module.exports = {
   },
 
   'Accessing folders page as logged in user' : (browser) => {
-    browser
-      .url('http://localhost:3001/login')
-      .waitForElementVisible('navigation', 1000)
-      .expect.element('body').to.not.have.css('div#alert_div');
-    browser
-      .setValue('#formly_1_input_username_0', 'registered')
-      .setValue('#formly_1_input_password_1', 'registered')
-      .click('#login_button');
-    browser
-      .waitForElementVisible('li#settings_link', 1000)
-      .click('#settings_link')
-      .click('#folders_link')
-      .assert.containsText('body', 'Your folders');
-    browser
-      .end();
+    User.findOne(function (err, user) {
+      if (err) { return handleError(err); }
+      if (user) {
+        user.folders = [];
+        user.save();
+        browser
+          .url('http://localhost:3001/login')
+          .waitForElementVisible('navigation', 1000)
+          .expect.element('body').to.not.have.css('div#alert_div');
+        browser
+          .setValue('#formly_1_input_username_0', 'registered')
+          .setValue('#formly_1_input_password_1', 'registered')
+          .click('#login_button');
+        browser
+          .waitForElementVisible('li#settings_link', 1000)
+          .click('#settings_link')
+          .click('#folders_link')
+          .assert.containsText('body', 'Your folders');
+        browser
+          .end();
+      }
+    });
   },
 
   'Add/delete folder' : (browser) => {
@@ -68,7 +80,7 @@ module.exports = {
       .end();
   },
 
-  'Add duplicate folder' : (browser) => {
+  'Add duplicate folder via add new' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -108,7 +120,7 @@ module.exports = {
       .end();
   },
 
-  'Add duplicate folder' : (browser) => {
+  'Add duplicate folder via save' : (browser) => {
     browser
       .url('http://localhost:3001/login')
       .waitForElementVisible('navigation', 1000)
@@ -148,10 +160,10 @@ module.exports = {
       .assert.containsText('body', 'Your folders');
     browser
       .clearValue("#folder_1")
-      .setValue('#folder_1', 'my_folder1')
-      .click('#edit_folder_button_1');
+      .setValue('#folder_1', 'my_folder2')
+      .click('#save_folder_button');
     browser
-      .assert.containsText('div#alert_div', 'already');
+      .assert.containsText('div#alert_div', 'duplicate');
     browser
       .end();
   }

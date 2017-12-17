@@ -4,8 +4,8 @@ require('./backend/models/user');
 const User       = mongoose.model('User');
 
 let formatDate = (date) => {
-  return date.getUTCFullYear() +"/"+
-    ("0" + (date.getUTCMonth()+1)).slice(-2) +"/"+
+  return date.getUTCFullYear() + "/" +
+    ("0" + (date.getUTCMonth() + 1)).slice(-2) + "/" +
     ("0" + date.getUTCDate()).slice(-2) + " " +
     ("0" + date.getUTCHours()).slice(-2) + ":" +
     ("0" + date.getUTCMinutes()).slice(-2) + ":" +
