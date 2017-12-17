@@ -20,20 +20,21 @@ every 6 hours
 const userSchema = new Schema({
     id: ObjectId,
     username: {
-      type: String,
+      type:      String,
       minlength: 2,
-      unique: true,
-      required: true
+      unique:    true,
+      required:  true
     },
     password: {
-      type: String,
+      type:      String,
       minlength: 8,
-      required: true
+      required:  true
     },
     checkInterval: { type: String, default: "every 1 h" },
-    nextEvent: { type: Date },
-    isAdmin: { type: Boolean, default: false },
-    folders: [String],
+    nextEvent:     { type: Date },
+    isAdmin:       { type: Boolean, default: false },
+    folders:       [String],
+    subscriptions: [{URL: String, folder: String}],
   },
   { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
 );

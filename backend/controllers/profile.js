@@ -20,6 +20,7 @@ module.exports.fetchProfile = (req, res) => {
                             "nextEvent": user.nextEvent,
                             "checkInterval": user.checkInterval,
                             "folders": user.folders,
+                            "subscriptions": user.subscriptions,
                             "_id": req.payload._id });
     });
   }
@@ -39,6 +40,7 @@ module.exports.updateProfile = (req, res) => {
       userToUpdate.checkInterval = req.body.checkInterval;
       userToUpdate.setNextEvent();
       userToUpdate.folders       = req.body.folders;
+      userToUpdate.subscriptions = req.body.subscriptions;
       userToUpdate.save(function(err, user) {
         if(err) {
           // unique entry violation

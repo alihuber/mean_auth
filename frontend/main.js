@@ -28,6 +28,11 @@
         controller: 'foldersCtrl',
         controllerAs: 'vm'
       })
+      .when('/subscriptions', {
+        templateUrl: 'subscriptions/subscriptions.view.html',
+        controller: 'subscriptionsCtrl',
+        controllerAs: 'vm'
+      })
       .when('/users', {
         templateUrl: 'users/users.view.html'
       })
@@ -59,6 +64,9 @@
           $location.path('/');
         }
         if($location.path() === '/folders' && !authentication.isLoggedIn()) {
+          $location.path('/');
+        }
+        if($location.path() === '/subscriptions' && !authentication.isLoggedIn()) {
           $location.path('/');
         }
         if($location.path() === '/users' && !authentication.isLoggedIn()) {

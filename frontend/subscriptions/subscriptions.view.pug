@@ -1,0 +1,65 @@
+.wrapper
+  // sidebar directive
+  sidebar
+  .main-panel
+    // navigation directive
+    navigation
+    .content(ng-if='vm.user.folders.length === 0 || ' +
+    'vm.user.folders === undefined')
+      .container
+        .row
+          .col-md-6
+            h1.form-signin-heading Your subscriptions
+            | You don't have any folders yet. Please create some folders first
+    .content(ng-if='vm.user.folders.length > 0')
+      .container
+        .row
+          .col-md-6
+            h1.form-signin-heading Your subscriptions
+            .alert.alert-danger(id='alert_div', role='alert',
+              ng-if='vm.message') {{vm.message}}
+            table.table#subscriptions_table
+              thead
+                tr
+                  th Subscription URL
+                  th Folder
+                  th(colspan='2') Actions
+              tbody
+                tr(ng-repeat='subscription in vm.subscriptions track by $index')
+                  td
+                    input.form-control(id='subscription_{{$index}}',
+                    ng-model='vm.subscriptions[$index]["URL"]',
+                    ng-value='vm.subscriptions[$index]["URL"]')
+                  td
+                    // string concat because both \ and ` will add blank char
+                    select.form-control#folderSelect(ng-model='vm.' +
+                    'subscriptions[$index]["folder"]')
+                      option(ng-repeat='folder in vm.user.folders',
+                      value='{{folder}}') {{folder}}
+                  td
+                    button.btn.btn-danger.btn-sm(id='remove_subscription_' +
+                    'button_{{$index}}',
+                    ng-click='vm.removeSubscription(subscription)') Remove
+            h1.form-signin-heading Add subscription
+            form(ng-class="{'submitted': vm.submitted}",
+              name='vm.subscriptionForm')
+              .form-group
+                label(for='URL') URL*
+                .row
+                  .col-md-8
+                    input.form-control(id='url_input',
+                      placeholder='Enter URL', ng-model='vm.newSubscriptionURL',
+                      required='')
+                  .col-md-4
+                    select.form-control#newSubscriptionfolderSelect(ng-model=
+                    'vm.newSubscriptionFolder',
+                    ng-options='folder for folder in vm.user.folders')
+              .row
+                .col-md-6.text-left
+                  button.btn.btn-default(id='add_subscription_button',
+                  ng-click='vm.addSubscription($event)',
+                  ng-disabled='vm.newSubscriptionURL.length === 0 || ' +
+                  'vm.newSubscriptionURL === undefined') Add
+                .col-md-6.text-right
+                  button.btn.btn-primary.align-right(id='save_subscription_' +
+                  'button' ng-click='vm.updateProfile($event)') Save settings
